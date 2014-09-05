@@ -1,0 +1,152 @@
+#
+# init.sony-platform.rc
+#
+
+on init
+
+    # Enable subsystem ramdump (Silent Reboot)
+    write /sys/bus/msm_subsys/devices/subsys0/restart_level "RELATED"
+    write /sys/bus/msm_subsys/devices/subsys1/restart_level "RELATED"
+    write /sys/bus/msm_subsys/devices/subsys2/restart_level "RELATED"
+    write /sys/bus/msm_subsys/devices/subsys3/restart_level "RELATED"
+
+    # SONY: Start the TrimArea Daemon. It must be started before fota-ua
+    class_start trimarea
+    exec /sbin/wait4tad_static
+
+    #Disable Bluetooth A2DP SNK
+    setprop bluetooth.a2dp.sink.enabled false
+
+    # create directory for scd
+    mkdir /dev/socket/scd 0755 system system
+
+    # create USB host bus directory here so that libusbhost
+    # can start monitoring.
+    mkdir /dev/bus 0755 root root
+    mkdir /dev/bus/usb 0755 root root
+
+on early-init
+    write /sys/block/zram0/disksize 256M
+
+on fs
+    # SONY: Start early TA-users
+    exec /system/bin/taimport
+
+    # Create a tmpfs for dynamic network mounting
+    mkdir /storage/remote  0700 root system
+    mount tmpfs tmpfs /storage/remote mode=0750,uid=0,gid=1028,size=1024k,nr_inodes=256
+
+on post-fs
+    # Display color correction is needed in charge only mode as well
+    start display_cc
+
+    exec /system/bin/chargemon
+    write /sys/class/power_supply/battery/discharging_enable_for_shutdown 1
+
+on post-fs-data
+   write /proc/sys/vm/page-cluster 0
+   write /proc/sys/vm/swappiness 1
+   write /sys/kernel/mm/ksm/sleep_millisecs 500
+   write /proc/sys/vm/vfs_cache_pressure 32
+
+on early-boot
+    start ta_qmi_service
+    start sct_service
+
+on boot
+    # Enable Sony RIC
+    mount securityfs securityfs /sys/kernel/security nosuid nodev noexec
+    write /sys/kernel/security/sony_ric/enable 1
+
+    # Enable Wi-Fi EAP SIM
+    setprop ro.wifi.eap_sim_enabled true
+
+    # Do not power down SIM in flight mode (required for Wi-Fi EAP-SIM)
+    setprop persist.radio.apm_sim_not_pwdn 1
+
+on property:gsm.nitz.time=*
+    exec /system/bin/scdnotifier nitz
+
+# SONY: TrimArea Daemon
+# Last 2 args: start block(blk size 128k), number of blocks(partitionsize(kb)/128(kb))
+service tad_static /sbin/tad_static /dev/block/mmcblk0 1,16
+    user root
+    group root
+    socket tad stream 0660 system trimarea
+    class trimarea
+    seclabel u:r:tad:s0
+
+service updatemiscta /system/bin/updatemiscta
+    class main
+    user root
+    oneshot
+
+service illumination /system/bin/illumination_service
+    socket illumination stream 0660 root system
+    class core
+    user root
+
+# Trim Area QMI service
+service ta_qmi_service /system/bin/ta_qmi_service
+    user root
+    disabled
+
+# Secure Config Transfer service
+service sct_service /system/bin/sct_service
+    user root
+    disabled
+
+service scd /system/bin/scd
+    class main
+    user system
+    group system
+
+# Sensor calibration
+on property:service.acccalib.start=service_setting
+    exec /system/bin/acc_cal_data_manager service_setting
+
+on property:service.calib.start=service_setting
+    exec /system/bin/cal_data_manager service_setting
+
+on property:service.proxcalib.start=service_setting
+    exec /system/bin/prox_cal_data_manager service_setting
+
+on property:service.proxcalib.start=service_setting_default
+    exec /system/bin/prox_cal_data_manager service_setting_default
+
+on property:init.svc.bootanim=stopped
+    start set-governor
+
+service dhcpcd_eth0 /system/bin/dhcpcd -B -d -t 30
+    class late_start
+    disabled
+    oneshot
+
+service set-governor /system/bin/sh /system/etc/set_governor.sh
+    user root
+    disabled
+    oneshot
+
+# Touch
+on property:persist.sys.touch.glove_mode=0
+    write /sys/bus/ttsp4/devices/main_ttsp_core.cyttsp4_i2c_adapter/signal_disparity 0
+
+on property:persist.sys.touch.glove_mode=1
+    write /sys/bus/ttsp4/devices/main_ttsp_core.cyttsp4_i2c_adapter/signal_disparity 1
+
+# display color calibration
+service display_cc /system/bin/display_color_calib
+    class main
+    oneshot
+    disabled
+
+on property:vold.decrypt=trigger_restart_framework
+    start display_cc
+
+on property:sys.boot_completed=1
+    exec /system/bin/sh /system/etc/enable_swap.sh
+
+on property:vold.decrypt=trigger_shutdown_framework
+    exec /system/bin/swapoff /dev/block/zram0
+
+import init.sony.rc

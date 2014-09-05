@@ -1,0 +1,4 @@
+#
+# init.sony-device.rc
+#
+import init.sony-platform.rc
