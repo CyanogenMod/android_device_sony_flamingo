@@ -39,6 +39,9 @@ on post-fs-data
     exec /system/bin/rm -r /cache/lost+found
     mkdir /cache/lost+found 0770 root root
 
+    exec /system/bin/rm -r /mnt/idd/lost+found
+    mkdir /mnt/idd/lost+found 0770 root root
+
 on boot
     exec /system/bin/taimport property
 

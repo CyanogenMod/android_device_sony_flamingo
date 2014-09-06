@@ -33,7 +33,13 @@ on early-init
     symlink /data/tombstones /tombstones
 
 on fs
+    mkdir /mnt/idd 0751 sony_idd sony_idd
+
     mount_all fstab.qcom
+    setprop ro.crypto.fuse_sdcard true
+
+    chown sony_idd sony_idd /mnt/idd
+    chmod 0751 /mnt/idd
 
 on post-fs-data
     mkdir /data/tombstones 0771 system system
