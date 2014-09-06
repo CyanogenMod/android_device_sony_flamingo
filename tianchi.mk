@@ -61,12 +61,13 @@ PRODUCT_COPY_FILES += \
     $(COMMON_PATH)/rootdir/init.sony-platform.rc:root/init.sony-platform.rc \
     $(COMMON_PATH)/rootdir/init.sony-device.rc:root/init.sony-device.rc \
     $(COMMON_PATH)/rootdir/init.target.rc:root/init.target.rc \
-    $(LOCAL_PATH)/rootdir/init.sony.usb.rc:root/init.sony.usb.rc \
+    $(COMMON_PATH)/rootdir/init.sony.usb.rc:root/init.sony.usb.rc \
     $(COMMON_PATH)/rootdir/ueventd.qcom.rc:root/ueventd.qcom.rc \
+    $(COMMON_PATH)/rootdir/system/etc/set_governor.sh:system/etc/set_governor.sh
 
 # Device specific part for two-stage boot
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/recovery/bootrec-device:recovery/bootrec-device
+    $(COMMON_PATH)/recovery/bootrec-device:recovery/bootrec-device
 
 # Recovery
 PRODUCT_PACKAGES += \
@@ -122,12 +123,6 @@ PRODUCT_PACKAGES += \
 
 # NFCEE access control
 NFCEE_ACCESS_PATH := $(COMMON_PATH)/rootdir/system/etc/nfcee_access.xml
-
-
-# Qualcomm Random Number Generator
-PRODUCT_PACKAGES += \
-    qrngd \
-    qrngp
 
 # USB
 PRODUCT_PACKAGES += \

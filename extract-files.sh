@@ -155,6 +155,7 @@ COMMON_BIN_EXTRAS="
 	ptt_socket_app
 	qcom-system-daemon
 	rfs_access
+	rild
 	sensors.qcom
 	"
 copy_files "$COMMON_BIN_EXTRAS" "system/bin" "bin"
@@ -229,16 +230,29 @@ COMMON_ETC_FIRMWARE="
 copy_files "$COMMON_ETC_FIRMWARE" "system/etc/firmware" "etc/firmware"
 
 COMMON_LIB="
+	libMiscTaAccessor.so
 	libcnefeatureconfig.so
+	libidd.so
 	libgps.utils.so
+	liblights-core.so
 	libloc_api_v02.so
 	libloc_core.so
 	libloc_ds_api.so
 	libloc_eng.so
 	libloc_xtra.so
+	libmiscta.so
 	libmmcamera_interface.so
 	libmmjpeg_interface.so
+	libprotobuf-c.so
 	libqomx_core.so
+	libreference-ril.so
+	libril.so
+	librilutils.so
+	libsys-utils.so
+	libsysmon.so
+	libsysmon_idd.so
+	libsysmon_jni.so
+	libta.so
 	"
 copy_files "$COMMON_LIB" "system/lib" "lib"
 
@@ -307,4 +321,5 @@ copy_files "$COMMON_VENDOR_LIB_MEDIADRM" "system/vendor/lib/mediadrm" "vendor/li
 #copy_files "$B2G_TIME_BUNDLE" "system/b2g/distribution/bundles/b2g_time" ""
 
 echo $BASE_PROPRIETARY_DEVICE_DIR/lib/libcnefeatureconfig.so:obj/lib/libcnefeatureconfig.so \\ >> $BLOBS_LIST
+echo $BASE_PROPRIETARY_DEVICE_DIR/vendor/lib/libtime_genoff.so:obj/lib/libtime_genoff.so \\ >> $BLOBS_LIST
 

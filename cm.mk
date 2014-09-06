@@ -12,14 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Inherit from those products. Most specific first.
-$(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
-
 # Inherit from tianchi device
 $(call inherit-product, device/sony/tianchi/full_tianchi.mk)
-
-# Inherit some common CM stuff
-$(call inherit-product, vendor/cm/config/gsm.mk)
 
 # Enhanced NFC
 $(call inherit-product, vendor/cm/config/nfc_enhanced.mk)
@@ -30,7 +24,5 @@ $(call inherit-product, vendor/cm/config/common_full_phone.mk)
 # Build fingerprints
 PRODUCT_BUILD_PROP_OVERRIDES += PRODUCT_NAME=D5303 BUILD_FINGERPRINT=Sony/D5303/D5303:4.4.2/19.1.A.0.473/Jv5_Zw:user/release-keys PRIVATE_BUILD_DESC="D5303-user 4.4.2 19.1.A.0.473 Jv5_Zw release-keys"
 
-PRODUCT_NAME := cm_huashan
-PRODUCT_DEVICE := huashan
-PRODUCT_MANUFACTURER := Sony
-PRODUCT_MODEL := Xperia T2 Ultra
+PRODUCT_NAME := cm_tianchi
+PRODUCT_DEVICE := tianchi
