@@ -3,15 +3,14 @@
 #
 
 on init
-
     # Enable subsystem ramdump (Silent Reboot)
     write /sys/bus/msm_subsys/devices/subsys0/restart_level "RELATED"
     write /sys/bus/msm_subsys/devices/subsys1/restart_level "RELATED"
     write /sys/bus/msm_subsys/devices/subsys2/restart_level "RELATED"
     write /sys/bus/msm_subsys/devices/subsys3/restart_level "RELATED"
 
-    # SONY: Start the TrimArea Daemon. It must be started before fota-ua
-    class_start trimarea
+    # SONY: Start the TrimArea Daemon
+    class_start sony_ta
     exec /sbin/wait4tad_static
 
     #Disable Bluetooth A2DP SNK
@@ -72,8 +71,8 @@ on property:gsm.nitz.time=*
 service tad_static /sbin/tad_static /dev/block/mmcblk0 1,16
     user root
     group root
-    socket tad stream 0660 system trimarea
-    class trimarea
+    socket tad stream 0660 system sony_ta
+    class sony_ta
     seclabel u:r:tad:s0
 
 service updatemiscta /system/bin/updatemiscta
