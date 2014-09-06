@@ -29,7 +29,7 @@ PROPRIETARY_DEVICE_DIR=../../../vendor/$MANUFACTURER/$DEVICE/proprietary
 
 mkdir -p $PROPRIETARY_DEVICE_DIR
 
-for NAME in bin etc etc/firmware lib lib/egl lib/hw lib/sysmon vendor vendor/etc vendor/firmware vendor/firmware/keymaster vendor/lib vendor/lib/drm vendor/lib/egl vendor/lib/hw vendor/lib/mediadrm vendor/lib/rfsa vendor/lib/rfsa/adsp
+for NAME in bin etc etc/firmware lib lib/egl lib/hw lib/sysmon vendor vendor/etc vendor/firmware vendor/firmware/keymaster vendor/lib vendor/lib/drm vendor/lib/egl vendor/lib/hw vendor/lib/mediadrm vendor/lib/rfsa vendor/lib/rfsa/adsp vendor/lib/soundfx
 do
     mkdir -p $PROPRIETARY_DEVICE_DIR/$NAME
 done
@@ -228,10 +228,13 @@ COMMON_ETC_FIRMWARE="
 copy_files "$COMMON_ETC_FIRMWARE" "system/etc/firmware" "etc/firmware"
 
 COMMON_LIB="
+	lib_asb_tee.so
 	libMiscTaAccessor.so
+	libcamera_clientsemc.so
 	libcnefeatureconfig.so
 	libidd.so
 	libgps.utils.so
+	libkeyctrl.so
 	liblights-core.so
 	libloc_api_v02.so
 	libloc_core.so
@@ -241,6 +244,7 @@ COMMON_LIB="
 	libmiscta.so
 	libmmcamera_interface.so
 	libmmjpeg_interface.so
+	libpin-cache.so
 	libprotobuf-c.so
 	libqomx_core.so
 	libreference-ril.so
@@ -311,6 +315,21 @@ COMMON_VENDOR_LIB_MEDIADRM="
 	libwvdrmengine.so
 	"
 copy_files "$COMMON_VENDOR_LIB_MEDIADRM" "system/vendor/lib/mediadrm" "vendor/lib/mediadrm"
+
+COMMON_VENDOR_LIB_RFSA_ADSP="
+	libadsp_denoise_skel.so
+	libdspCV_skel.so
+	libfastcvadsp.so
+	libfastcvadsp_skel.so
+	"
+copy_files "$COMMON_VENDOR_LIB_RFSA_ADSP" "system/vendor/lib/rfsa/adsp" "vendor/lib/rfsa/adsp"
+
+COMMON_VENDOR_LIB_SOUNDFX="
+	libqcbassboost.so
+	libqcreverb.so
+	libqcvirt.so
+	"
+copy_files "$COMMON_VENDOR_LIB_SOUNDFX" "system/vendor/lib/soundfx" "vendor/lib/soundfx"
 
 #B2G_TIME_BUNDLE="
 #        chrome.manifest

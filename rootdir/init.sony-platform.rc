@@ -73,7 +73,6 @@ service tad_static /sbin/tad_static /dev/block/mmcblk0 1,16
     group root
     socket tad stream 0660 system sony_ta
     class sony_ta
-    seclabel u:r:tad:s0
 
 service updatemiscta /system/bin/updatemiscta
     class main
