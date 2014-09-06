@@ -121,16 +121,16 @@ PRODUCT_PACKAGES += \
     keystore.msm8974
 
 # NFC packages
-PRODUCT_PACKAGES += \
-    libnfc-nci \
-    libnfc_nci_jni \
-    nfc_nci.msm8226 \
-    NfcNci \
-    Tag \
-    com.android.nfc_extras
-
+# PRODUCT_PACKAGES += \
+#    libnfc-nci \
+#    libnfc_nci_jni \
+#    nfc_nci.msm8226 \
+#    NfcNci \
+#    Tag \
+#    com.android.nfc_extras
+#
 # NFCEE access control
-NFCEE_ACCESS_PATH := $(COMMON_PATH)/rootdir/system/etc/nfcee_access.xml
+# NFCEE_ACCESS_PATH := $(COMMON_PATH)/rootdir/system/etc/nfcee_access.xml
 
 # USB
 PRODUCT_PACKAGES += \
