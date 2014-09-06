@@ -33,12 +33,7 @@ on early-init
     symlink /data/tombstones /tombstones
 
 on fs
-    mkdir /mnt/idd 0751 idd idd
-
     mount_all fstab.qcom
-
-    chown idd idd /mnt/idd
-    chmod 0751 /mnt/idd
 
 on post-fs-data
     mkdir /data/tombstones 0771 system system
@@ -53,11 +48,6 @@ on boot
 #Start the qcom-system-daemon service
 service qcomsysd /system/bin/qcom-system-daemon
     class main
-
-service iddd /system/bin/iddd
-    class core
-    user idd
-    group idd log
 
 #start camera server as daemon
 service qcamerasvr /system/bin/mm-qcamera-daemon

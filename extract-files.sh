@@ -163,7 +163,6 @@ copy_files "$COMMON_BIN_EXTRAS" "system/bin" "bin"
 SONY_BIN="
 	credmgrd
 	display_color_calib
-	iddd
 	illumination_service
 	scd
 	scdnotifier
@@ -181,7 +180,6 @@ COMMON_ETC="
 	audio_policy.conf
 	flp.conf
 	gps.conf
-	iddd.conf
 	izat.conf
 	nfc-nci.conf
 	sap.conf
