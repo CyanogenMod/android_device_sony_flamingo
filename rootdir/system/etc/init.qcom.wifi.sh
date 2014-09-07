@@ -48,7 +48,10 @@ if [ -e /sys/bus/platform/drivers/msm_hsic_host ]; then
    chown -h system.system /sys/bus/platform/drivers/msm_hsic_host/unbind
    chmod -h 0200 /sys/bus/platform/drivers/msm_hsic_host/bind
    chmod -h 0200 /sys/bus/platform/drivers/msm_hsic_host/unbind
-    fi
+fi
+
+rm  /system/lib/modules/wlan.ko
+ln -s /system/lib/modules/pronto/pronto_wlan.ko /system/lib/modules/wlan.ko
 
 if [ -e /data/misc/wifi/WCNSS_qcom_wlan_cal.bin ]; then
     calparm=`ls /sys/module/wcnsscore/parameters/has_calibrated_data`

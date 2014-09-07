@@ -19,6 +19,8 @@ import init.sony.usb.rc
 
 on early-init
     mount debugfs debugfs /sys/kernel/debug
+    write /sys/block/mmcblk0/queue/scheduler noop
+    write /sys/block/mmcblk0/bdi/read_ahead_kb 512
 
 on init
     # See storage config details at http://source.android.com/tech/storage/
@@ -46,7 +48,7 @@ on early-boot
     # set RLIMIT_MEMLOCK to 64MB
     setrlimit 8 67108864 67108864
     write /sys/kernel/boot_adsp/boot 1
-    exec /system/bin/sh /system/etc/init.qcom.wifi.sh ${ro.serialno}
+    exec /system/bin/sh /init.qcom.syspart_fixup.sh ${ro.serialno}
 
 on boot
     # bring CPUs online
@@ -161,7 +163,7 @@ on post-fs-data
 
 on charger
     # Enable Power modes and set the CPU Freq Sampling rates
-    write /sys/module/lpm_levels/enable_low_power/l2 2
+    write /sys/module/lpm_levels/enable_low_power/l2 4
     write /sys/module/msm_pm/modes/cpu0/power_collapse/suspend_enabled 1
     write /sys/module/msm_pm/modes/cpu1/power_collapse/suspend_enabled 1
     write /sys/module/msm_pm/modes/cpu2/power_collapse/suspend_enabled 1
