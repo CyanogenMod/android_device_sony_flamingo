@@ -88,6 +88,10 @@ on boot
     # Do not power down SIM in flight mode (required for Wi-Fi EAP-SIM)
     setprop persist.radio.apm_sim_not_pwdn 1
 
+    # Panel backlight
+    chown system system /sys/class/leds/lm3630-lcd-bl/brightness
+    chmod 660 /sys/class/leds/lm3630-lcd-bl/brightness
+
 # SONY: TrimArea Daemon
 # Last 2 args: start block(blk size 128k), number of blocks(partitionsize(kb)/128(kb))
 service tad_static /sbin/tad_static /dev/block/mmcblk0 1,16
