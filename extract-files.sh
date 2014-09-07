@@ -244,6 +244,18 @@ COMMON_LIB="
 	libmiscta.so
 	libmmcamera_interface.so
 	libmmjpeg_interface.so
+	libmorpho_defocus_jni.so
+	libmorpho_denoiser.so
+	libmorpho_easy_hdr.so
+	libmorpho_edit_engine.so
+	libmorpho_fdw.so
+	libmorpho_hdr_checker.so
+	libmorpho_image_stabilizer3.so
+	libmorpho_movie_stabilizer3.so
+	libmorpho_object_tracker2.so
+	libmorpho_posture_detect.so
+	libmorpho_scene_detector.so
+	libmorpho_super_resolution.so
 	libpin-cache.so
 	libprotobuf-c.so
 	libqomx_core.so
