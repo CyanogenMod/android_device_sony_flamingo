@@ -32,15 +32,6 @@ on early-init
     mkdir /firmware 0771 system system
     symlink /data/tombstones /tombstones
 
-on fs
-    mkdir /mnt/idd 0751 sony_idd sony_idd
-
-    mount_all fstab.qcom
-    setprop ro.crypto.fuse_sdcard true
-
-    chown sony_idd sony_idd /mnt/idd
-    chmod 0751 /mnt/idd
-
 on post-fs-data
     mkdir /data/tombstones 0771 system system
     mkdir /tombstones/modem 0771 system system
@@ -49,67 +40,3 @@ on post-fs-data
 on post-fs
     export LD_PRELOAD /vendor/lib/libNimsWrap.so
 
-on boot
-
-#Start the qcom-system-daemon service
-service qcomsysd /system/bin/qcom-system-daemon
-    class main
-
-#start camera server as daemon
-service qcamerasvr /system/bin/mm-qcamera-daemon
-    class late_start
-    user camera
-    group camera system inet input graphics
-
-# Allow usb charging to be disabled persistently
-on property:persist.usb.chgdisabled=1
-   write /sys/class/power_supply/battery/charging_enabled 0
-
-on property:persist.usb.chgdisabled=0
-   write /sys/class/power_supply/battery/charging_enabled 1
-
-service time_daemon /system/bin/time_daemon
-   class late_start
-   user root
-   group root
-
-service mpdecision /system/bin/mpdecision --no_sleep --avg_comp
-   user root
-   disabled
-
-#start GNSS/Sensor interface daemon
-service gsiff_daemon /system/bin/gsiff_daemon
-   class late_start
-   user system
-   group gps net_raw
-
-service qseecomd /system/bin/qseecomd
-    class late_start
-    user root
-    group root
-
-service audiod /system/bin/audiod
-   class late_start
-   user system
-   group system
-
-service adsprpcd /system/bin/adsprpcd
-   class main
-   user media
-   group media
-
-service wcnss-service /system/bin/wcnss_service
-   class late_start
-   user system
-   group system wifi
-   oneshot
-
-service ppd /system/bin/mm-pp-daemon
-    class late_start
-    user system
-    socket pps stream 0660 system system
-    group system graphics
-    disabled
-
-on property:init.svc.surfaceflinger=stopped
-    stop ppd

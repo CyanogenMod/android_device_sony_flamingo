@@ -53,17 +53,22 @@ PRODUCT_COPY_FILES += \
 PRODUCT_AAPT_CONFIG := normal hdpi xhdpi
 PRODUCT_AAPT_PREF_CONFIG := xhdpi
 
-# Init
+# Init 2.0
 PRODUCT_COPY_FILES += \
     $(COMMON_PATH)/rootdir/fstab.qcom:root/fstab.qcom \
-    $(COMMON_PATH)/rootdir/init.qcom.rc:root/init.qcom.rc \
-    $(COMMON_PATH)/rootdir/init.sony.rc:root/init.sony.rc \
-    $(COMMON_PATH)/rootdir/init.sony-platform.rc:root/init.sony-platform.rc \
-    $(COMMON_PATH)/rootdir/init.sony-device.rc:root/init.sony-device.rc \
-    $(COMMON_PATH)/rootdir/init.target.rc:root/init.target.rc \
+    $(COMMON_PATH)/rootdir/init.qcom2.rc:root/init.qcom.rc \
+    $(COMMON_PATH)/rootdir/init.sony2.rc:root/init.sony.rc \
     $(COMMON_PATH)/rootdir/init.sony.usb.rc:root/init.sony.usb.rc \
     $(COMMON_PATH)/rootdir/ueventd.qcom.rc:root/ueventd.qcom.rc \
     $(COMMON_PATH)/rootdir/system/etc/set_governor.sh:system/etc/set_governor.sh
+
+# Init
+# PRODUCT_COPY_FILES += \
+#    $(COMMON_PATH)/rootdir/init.qcom.rc:root/init.qcom.rc \
+#    $(COMMON_PATH)/rootdir/init.sony.rc:root/init.sony.rc \
+#    $(COMMON_PATH)/rootdir/init.sony-platform.rc:root/init.sony-platform.rc \
+#    $(COMMON_PATH)/rootdir/init.sony-device.rc:root/init.sony-device.rc \
+#    $(COMMON_PATH)/rootdir/init.target.rc:root/init.target.rc \
 
 # Keys and Touchscreens
 PRODUCT_COPY_FILES += \

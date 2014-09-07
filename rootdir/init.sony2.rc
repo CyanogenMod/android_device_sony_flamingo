@@ -1,0 +1,179 @@
+#
+# Copyright 2014 The CyanogenMod Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+on init
+    # Enable subsystem ramdump (Silent Reboot)
+    write /sys/bus/msm_subsys/devices/subsys0/restart_level "RELATED"
+    write /sys/bus/msm_subsys/devices/subsys1/restart_level "RELATED"
+    write /sys/bus/msm_subsys/devices/subsys2/restart_level "RELATED"
+    write /sys/bus/msm_subsys/devices/subsys3/restart_level "RELATED"
+
+    # SONY: Start the TrimArea Daemon
+    class_start sony_ta
+    exec /sbin/wait4tad_static
+
+    # create directory for scd
+    mkdir /dev/socket/scd 0755 system system
+
+on fs
+    mkdir /lta-label 0555 system system
+    wait /dev/block/platform/msm_sdcc.1/by-name/LTALabel
+    mount ext4 /dev/block/platform/msm_sdcc.1/by-name/LTALabel /lta-label nosuid nodev noatime noexec ro barrier=0
+    chown system system /lta-label
+    chmod 0555 /lta-label
+
+    # SONY: Start early TA-users
+    exec /system/bin/taimport
+
+    mkdir /mnt/idd 0751 sony_idd sony_idd
+
+    mount_all fstab.qcom
+    setprop ro.crypto.fuse_sdcard true
+
+    chown sony_idd sony_idd /mnt/idd
+    chmod 0751 /mnt/idd
+
+    # Create a tmpfs for dynamic network mounting
+    mkdir /storage/remote  0700 root system
+    mount tmpfs tmpfs /storage/remote mode=0750,uid=0,gid=1028,size=1024k,nr_inodes=256
+
+on post-fs
+    # Change to socket location on libkeyctrl/suntory for /data encryption
+    mkdir /dev/socket/suntory 0755 system system
+
+    exec /system/bin/chargemon
+    write /sys/class/power_supply/battery/discharging_enable_for_shutdown 1
+
+on post-fs-data
+    mkdir /data/credmgr 0700 system system
+    mkdir /data/smime 0770 root smime_keystore
+    mkdir /data/pc 0700 radio radio
+    # Remove lost+found in user and userdebug
+    mkdir /data/tombstones 0755 system system
+    mkdir /data/tombstones/vendor 0755 system system
+    mkdir /data/crashsms 0711 system system
+    mkdir /data/crashsms/crashes 0755 system system
+    mkdir /data/app-skin 0771 system system
+
+    #SONY_BEGIN (Indication of Mobile Network Information 2.0)
+    setprop persist.radio.rat_on legacy
+
+    # Update WIFI MAC address
+    mkdir /data/misc/wifi/prima 0775 wifi wifi
+    exec /system/bin/mac-update
+
+on early-boot
+    start ta_qmi_service
+    start sct_service
+
+on boot
+    exec /system/bin/taimport property
+
+    # Enable Wi-Fi EAP SIM
+    setprop ro.wifi.eap_sim_enabled true
+
+    # Do not power down SIM in flight mode (required for Wi-Fi EAP-SIM)
+    setprop persist.radio.apm_sim_not_pwdn 1
+
+# SONY: TrimArea Daemon
+# Last 2 args: start block(blk size 128k), number of blocks(partitionsize(kb)/128(kb))
+service tad_static /sbin/tad_static /dev/block/mmcblk0 1,16
+    user root
+    group root
+    socket tad stream 0660 system sony_ta
+    class sony_ta
+
+service updatemiscta /system/bin/updatemiscta
+    class main
+    user root
+    oneshot
+
+service illumination /system/bin/illumination_service
+    socket illumination stream 0660 root system
+    class core
+    user root
+
+# Trim Area QMI service
+service ta_qmi_service /system/bin/ta_qmi_service
+    user root
+    disabled
+
+# Secure Config Transfer service
+service sct_service /system/bin/sct_service
+    user root
+    disabled
+
+service scd /system/bin/scd
+    class main
+    user system
+    group system
+
+# Sensor calibration
+on property:service.acccalib.start=service_setting
+    exec /system/bin/acc_cal_data_manager service_setting
+
+on property:service.calib.start=service_setting
+    exec /system/bin/cal_data_manager service_setting
+
+on property:service.proxcalib.start=service_setting
+    exec /system/bin/prox_cal_data_manager service_setting
+
+on property:service.proxcalib.start=service_setting_default
+    exec /system/bin/prox_cal_data_manager service_setting_default
+
+on property:init.svc.bootanim=stopped
+    start set-governor
+
+service set-governor /system/bin/sh /system/etc/set_governor.sh
+    user root
+    disabled
+    oneshot
+
+# Touch
+on property:persist.sys.touch.glove_mode=0
+    write /sys/bus/ttsp4/devices/main_ttsp_core.cyttsp4_i2c_adapter/signal_disparity 0
+
+on property:persist.sys.touch.glove_mode=1
+    write /sys/bus/ttsp4/devices/main_ttsp_core.cyttsp4_i2c_adapter/signal_disparity 1
+
+# Start suntrold
+service suntrold /system/bin/suntrold
+    user system
+    group system
+    oneshot
+    class main
+
+# Start Credential manager daemon
+service credmgrd /system/bin/credmgrd
+    user system
+    group system
+    socket credmgr stream 0660 system system
+    class main
+
+# Start system_monitor
+service system_monitor /system/bin/system_monitor
+    socket sysmon stream 0660 root system
+    class core
+    user root
+
+# bugreport is triggered by holding down volume down, volume up and power
+service bugreport /system/bin/dumpstate -d -p -B \
+        -o /data/data/com.android.shell/files/bugreports/bugreport
+    class main
+    disabled
+    oneshot
+    keycodes 114 115 116
+

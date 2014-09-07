@@ -8,31 +8,7 @@ on init
     chmod 0664 /proc/rdtag
     chown root system /proc/rdtag
 
-on fs
-    mkdir /lta-label 0555 system system
-    wait /dev/block/platform/msm_sdcc.1/by-name/LTALabel
-    mount ext4 /dev/block/platform/msm_sdcc.1/by-name/LTALabel /lta-label nosuid nodev noatime noexec ro barrier=0
-    chown system system /lta-label
-    chmod 0555 /lta-label
-
-on post-fs
-    # Change to socket location on libkeyctrl/suntory for /data encryption
-    mkdir /dev/socket/suntory 0755 system system
-
 on post-fs-data
-    mkdir /data/credmgr 0700 system system
-    mkdir /data/smime 0770 root smime_keystore
-    mkdir /data/pc 0700 radio radio
-    # Remove lost+found in user and userdebug
-    mkdir /data/tombstones 0755 system system
-    mkdir /data/tombstones/vendor 0755 system system
-    mkdir /data/crashsms 0711 system system
-    mkdir /data/crashsms/crashes 0755 system system
-    mkdir /data/app-skin 0771 system system
-    
-    #SONY_BEGIN (Indication of Mobile Network Information 2.0)
-    setprop persist.radio.rat_on legacy
-
     exec /system/bin/rm -r /data/lost+found
     mkdir /data/lost+found 0770 root root
 
@@ -43,36 +19,6 @@ on post-fs-data
     mkdir /mnt/idd/lost+found 0770 root root
 
 on boot
-    exec /system/bin/taimport property
-
     # Configurate TCP/IP kernel settings
     exec /system/bin/sh /system/etc/init.netconfig.sh
     # Configure coredumps
-
-# Start suntrold
-service suntrold /system/bin/suntrold
-    user system
-    group system
-    oneshot
-    class main
-
-# Start Credential manager daemon
-service credmgrd /system/bin/credmgrd
-    user system
-    group system
-    socket credmgr stream 0660 system system
-    class main
-
-# Start system_monitor
-service system_monitor /system/bin/system_monitor
-    socket sysmon stream 0660 root system
-    class core
-    user root
-
-# bugreport is triggered by holding down volume down, volume up and power
-service bugreport /system/bin/dumpstate -d -p -B \
-        -o /data/data/com.android.shell/files/bugreports/bugreport
-    class main
-    disabled
-    oneshot
-    keycodes 114 115 116
