@@ -17,4 +17,4 @@
 char const*const LCD_BACKLIGHT_FILE  = "/sys/class/leds/lm3630-lcd-bl/brightness";
 char const*const LCD_BACKLIGHT2_FILE = "/dev/null";
 char const*const MAX_BRIGHTNESS_FILE = "/sys/class/leds/lm3630-lcd-bl/max_brightness";
-const int LCD_BRIGHTNESS_MIN         = 10;
+const int LCD_BRIGHTNESS_MIN         = 75;
