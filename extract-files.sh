@@ -260,8 +260,6 @@ COMMON_LIB_EGL="
 copy_files "$COMMON_LIB_EGL" "system/lib/egl" "lib/egl"
 
 COMMON_LIB_HW="
-	audio_policy.msm8226.so
-	audio.primary.msm8226.so
 	camera.msm8226.so
 	lights.default.so
 	nfc_nci_pn547.msm8226.so
