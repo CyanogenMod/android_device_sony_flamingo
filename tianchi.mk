@@ -122,16 +122,18 @@ PRODUCT_COPY_FILES += \
     $(COMMON_PATH)/rootdir/system/etc/init.qcom.fm.sh:system/etc/init.qcom.fm.sh
 
 # GPS
+PRODUCT_COPY_FILES += \
+    $(COMMON_PATH)/gps/flp.conf:system/etc/flp.conf \
+    $(COMMON_PATH)/gps/gps.conf:system/etc/gps.conf \
+    $(COMMON_PATH)/gps/izat.conf:system/etc/izat.conf \
+    $(COMMON_PATH)/gps/sap.conf:system/etc/sap.conf
+
 PRODUCT_PACKAGES += \
     com.qualcomm.location \
     gps.msm8974
 
 PRODUCT_PACKAGES += \
-    $(COMMON_PATH)/rootdir/system/etc/flp.conf:system/etc/flp.conf \
-    $(COMMON_PATH)/rootdir/system/etc/gps.conf:system/etc/gps.conf \
-    $(COMMON_PATH)/rootdir/system/etc/izat.conf:system/etc/izat.conf \
     $(COMMON_PATH)/rootdir/system/etc/msap.conf:system/etc/msap.conf \
-    $(COMMON_PATH)/rootdir/system/etc/sap.conf:system/etc/sap.conf \
     $(COMMON_PATH)/rootdir/system/etc/sec_config:system/etc/sec_config
 
 # Keystore

@@ -220,14 +220,10 @@ COMMON_LIB="
 	libcamera_clientsemc.so
 	libcnefeatureconfig.so
 	libidd.so
-	libgps.utils.so
 	libkeyctrl.so
 	liblights-core.so
 	libloc_api_v02.so
-	libloc_core.so
 	libloc_ds_api.so
-	libloc_eng.so
-	libloc_xtra.so
 	libmiscta.so
 	libmmcamera_interface.so
 	libmmjpeg_interface.so
@@ -267,7 +263,6 @@ COMMON_LIB_HW="
 	audio_policy.msm8226.so
 	audio.primary.msm8226.so
 	camera.msm8226.so
-	gps.default.so
 	lights.default.so
 	nfc_nci_pn547.msm8226.so
 	"
