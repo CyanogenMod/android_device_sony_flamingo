@@ -29,7 +29,7 @@ PROPRIETARY_DEVICE_DIR=../../../vendor/$MANUFACTURER/$DEVICE/proprietary
 
 mkdir -p $PROPRIETARY_DEVICE_DIR
 
-for NAME in bin etc etc/firmware lib lib/egl lib/hw lib/sysmon vendor vendor/etc vendor/firmware vendor/firmware/keymaster vendor/lib vendor/lib/drm vendor/lib/egl vendor/lib/hw vendor/lib/mediadrm vendor/lib/rfsa vendor/lib/rfsa/adsp vendor/lib/soundfx
+for NAME in bin etc etc/acdbdata etc/acdbdata/MTP etc/acdbdata/QRD etc/firmware lib lib/egl lib/hw lib/sysmon vendor vendor/etc vendor/firmware vendor/firmware/keymaster vendor/lib vendor/lib/drm vendor/lib/egl vendor/lib/hw vendor/lib/mediadrm vendor/lib/rfsa vendor/lib/rfsa/adsp vendor/lib/soundfx
 do
     mkdir -p $PROPRIETARY_DEVICE_DIR/$NAME
 done
@@ -175,22 +175,9 @@ SONY_BIN="
 	"
 copy_files "$SONY_BIN" "system/bin" "bin"
 
-COMMON_ETC="
-	audio_effects.conf
-	audio_policy.conf
-	flp.conf
-	gps.conf
-	izat.conf
-	nfc-nci.conf
-	sap.conf
-	sec_config
-	sensor_def_qcomdev.conf
-	sensor_def_somc.conf
-	sensors_calib.conf
-	sysmon.cfg
-	sap.conf
-	"
-copy_files "$COMMON_ETC" "system/etc" "etc"
+copy_files_glob "MTP_*.acdb" "system/etc/acdbdata/MTP" "etc/acdbdata/MTP"
+
+copy_files_glob "QRD_*.acdb" "system/etc/acdbdata/QRD" "etc/acdbdata/QRD"
 
 copy_files_glob "adsp*" "system/etc/firmware" "etc/firmware"
 

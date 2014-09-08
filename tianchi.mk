@@ -101,6 +101,11 @@ PRODUCT_PACKAGES += \
     audio.usb.default \
     audio_policy.msm8226
 
+PRODUCT_PACKAGES += \
+    $(COMMON_PATH)/rootdir/system/etc/audio_effects.conf:system/etc/audio_effects.conf \
+    $(COMMON_PATH)/rootdir/system/etc/audio_policy.conf:system/etc/audio_policy.conf \
+    $(COMMON_PATH)/rootdir/system/etc/mixer_paths.xml:system/etc/mixer_paths.xml \
+
 # Display
 PRODUCT_PACKAGES += \
     hwcomposer.msm8226 \
@@ -121,6 +126,14 @@ PRODUCT_PACKAGES += \
     com.qualcomm.location \
     gps.msm8974
 
+PRODUCT_PACKAGES += \
+    $(COMMON_PATH)/rootdir/system/etc/flp.conf:system/etc/flp.conf \
+    $(COMMON_PATH)/rootdir/system/etc/gps.conf:system/etc/gps.conf \
+    $(COMMON_PATH)/rootdir/system/etc/izat.conf:system/etc/izat.conf \
+    $(COMMON_PATH)/rootdir/system/etc/msap.conf:system/etc/msap.conf \
+    $(COMMON_PATH)/rootdir/system/etc/sap.conf:system/etc/sap.conf \
+    $(COMMON_PATH)/rootdir/system/etc/sec_config:system/etc/sec_config
+
 # Keystore
 PRODUCT_PACKAGES += \
     keystore.msm8974
@@ -136,6 +149,26 @@ PRODUCT_PACKAGES += \
 #
 # NFCEE access control
 # NFCEE_ACCESS_PATH := $(COMMON_PATH)/rootdir/system/etc/nfcee_access.xml
+
+PRODUCT_PACKAGES += \
+    $(COMMON_PATH)/rootdir/system/etc/libnfc-brcm.conf:system/etc/libnfc-brcm.conf \
+    $(COMMON_PATH)/rootdir/system/etc/libnfc-nxp.conf:system/etc/libnfc-nxp.conf \
+    $(COMMON_PATH)/rootdir/system/etc/nfc-nci.conf:system/etc/nfc-nci.conf
+
+# Media recording
+PRODUCT_PACKAGES += \
+    $(COMMON_PATH)/rootdir/system/etc/media_codecs.xml:system/etc/media_codecs.xml \
+    $(COMMON_PATH)/rootdir/system/etc/media_profiles.xml:system/etc/media_profiles.xml \
+
+# Sensors
+PRODUCT_COPY_FILES += \
+    $(COMMON_PATH)/rootdir/system/etc/sensor_def_qcomdev.conf:system/etc/sensor_def_qcomdev.conf \
+    $(COMMON_PATH)/rootdir/system/etc/sensor_def_somc.conf:system/etc/sensor_def_somc.conf \
+    $(COMMON_PATH)/rootdir/system/etc/sensors_calib.conf:system/etc/sensors_calib.conf \
+
+# System Monitor (Thermal Control)
+PRODUCT_PACKAGES += \
+    $(COMMON_PATH)/rootdir/system/etc/sysmon.cfg:system/etc/sysmon.cfg
 
 # USB
 PRODUCT_PACKAGES += \
