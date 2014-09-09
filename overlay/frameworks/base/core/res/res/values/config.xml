@@ -188,8 +188,8 @@
 
          Must be overridden in platform specific overlays -->
     <integer-array name="config_autoBrightnessLevels">
-        <item>2</item>
-        <item>5</item>
+        <item>3</item>
+        <item>6</item>
         <item>10</item>
         <item>20</item>
         <item>50</item>
@@ -198,10 +198,7 @@
         <item>500</item>
         <item>1000</item>
         <item>2000</item>
-        <item>3000</item>
-        <item>4000</item>
         <item>5000</item>
-
     </integer-array>
 
     <!-- Minimum screen brightness setting allowed by the power manager.
@@ -219,7 +216,7 @@
     <!-- Screen brightness used to dim the screen when the user activity
          timeout expires.  May be less than the minimum allowed brightness setting
          that can be set by the user. -->
-    <integer name="config_screenBrightnessDim">160</integer>
+    <integer name="config_screenBrightnessDim">100</integer>
 
     <!-- Array of output values for LCD backlight corresponding to the LUX values
          in the config_autoBrightnessLevels array.  This array should have size one greater
@@ -227,21 +224,18 @@
          The brightness values must be between 0 and 255 and be non-decreasing.
          This must be overridden in platform specific overlays -->
     <integer-array name="config_autoBrightnessLcdBacklightValues">
+        <item>100</item>
         <item>160</item>
-        <item>175</item>
-        <item>183</item>
-        <item>191</item>
-        <item>199</item>
-        <item>207</item>
-        <item>215</item>
-        <item>223</item>
-        <item>231</item>
-        <item>239</item>
-        <item>247</item>
-        <item>249</item>
-        <item>252</item>
+        <item>170</item>
+        <item>180</item>
+        <item>190</item>
+        <item>200</item>
+        <item>210</item>
+        <item>220</item>
+        <item>230</item>
+        <item>240</item>
+        <item>250</item>
         <item>255</item>
-
     </integer-array>
 
     <!-- Array of output values for button backlight corresponding to the LUX values
@@ -262,9 +256,6 @@
         <item>0</item>
         <item>0</item>
         <item>0</item>
-        <item>0</item>
-        <item>0</item>
-
     </integer-array>
 
     <!-- The default iface on which to monitor data use -->
