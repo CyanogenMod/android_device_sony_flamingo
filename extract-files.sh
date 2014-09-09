@@ -146,14 +146,19 @@ COMMON_BIN="
 copy_files "$COMMON_BIN" "system/bin" "bin"
 
 COMMON_BIN_EXTRAS="
+	acc_cal_data_manager
 	btnvtool
+	cal_data_manager
+	chargemon
 	ds_fmc_appd
 	gsiff_daemon
 	hvdcp
 	irsc_util
+	mm-pp-daemon
 	mpdecision
 	ptt_socket_app
 	qcom-system-daemon
+	qseecomd
 	rfs_access
 	rild
 	sensors.qcom
