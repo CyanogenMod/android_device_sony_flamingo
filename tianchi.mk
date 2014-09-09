@@ -101,7 +101,7 @@ PRODUCT_PACKAGES += \
     audio.usb.default \
     audio_policy.msm8226
 
-PRODUCT_PACKAGES += \
+PRODUCT_COPY_FILES += \
     $(COMMON_PATH)/rootdir/system/etc/audio_effects.conf:system/etc/audio_effects.conf \
     $(COMMON_PATH)/rootdir/system/etc/audio_policy.conf:system/etc/audio_policy.conf \
     $(COMMON_PATH)/rootdir/system/etc/mixer_paths.xml:system/etc/mixer_paths.xml \
@@ -132,7 +132,7 @@ PRODUCT_PACKAGES += \
     com.qualcomm.location \
     gps.msm8974
 
-PRODUCT_PACKAGES += \
+PRODUCT_COPY_FILES += \
     $(COMMON_PATH)/rootdir/system/etc/msap.conf:system/etc/msap.conf \
     $(COMMON_PATH)/rootdir/system/etc/sec_config:system/etc/sec_config
 
@@ -152,13 +152,13 @@ PRODUCT_PACKAGES += \
 # NFCEE access control
 # NFCEE_ACCESS_PATH := $(COMMON_PATH)/rootdir/system/etc/nfcee_access.xml
 
-PRODUCT_PACKAGES += \
+PRODUCT_COPY_FILES += \
     $(COMMON_PATH)/rootdir/system/etc/libnfc-brcm.conf:system/etc/libnfc-brcm.conf \
     $(COMMON_PATH)/rootdir/system/etc/libnfc-nxp.conf:system/etc/libnfc-nxp.conf \
     $(COMMON_PATH)/rootdir/system/etc/nfc-nci.conf:system/etc/nfc-nci.conf
 
 # Media recording
-PRODUCT_PACKAGES += \
+PRODUCT_COPY_FILES += \
     $(COMMON_PATH)/rootdir/system/etc/media_codecs.xml:system/etc/media_codecs.xml \
     $(COMMON_PATH)/rootdir/system/etc/media_profiles.xml:system/etc/media_profiles.xml \
 
@@ -169,7 +169,7 @@ PRODUCT_COPY_FILES += \
     $(COMMON_PATH)/rootdir/system/etc/sensors_calib.conf:system/etc/sensors_calib.conf \
 
 # System Monitor (Thermal Control)
-PRODUCT_PACKAGES += \
+PRODUCT_COPY_FILES += \
     $(COMMON_PATH)/rootdir/system/etc/sysmon.cfg:system/etc/sysmon.cfg
 
 # USB

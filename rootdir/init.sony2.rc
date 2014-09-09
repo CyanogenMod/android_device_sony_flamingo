@@ -75,6 +75,10 @@ on post-fs-data
     mkdir /data/misc/wifi/prima 0775 wifi wifi
     exec /system/bin/mac-update
 
+    # communicate with mpdecision and thermald
+    mkdir /dev/socket/mpdecision 0770 system system
+    chmod 2770 /dev/socket/mpdecision
+
 on early-boot
     start ta_qmi_service
     start sct_service
