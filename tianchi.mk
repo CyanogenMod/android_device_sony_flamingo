@@ -130,7 +130,7 @@ PRODUCT_COPY_FILES += \
 
 PRODUCT_PACKAGES += \
     com.qualcomm.location \
-    gps.msm8974
+    gps.msm8226
 
 PRODUCT_COPY_FILES += \
     $(COMMON_PATH)/rootdir/system/etc/msap.conf:system/etc/msap.conf \
