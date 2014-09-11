@@ -79,6 +79,10 @@ on post-fs-data
     mkdir /dev/socket/mpdecision 0770 system system
     chmod 2770 /dev/socket/mpdecision
 
+    # Flash LED
+    chown system camera /sys/class/leds/torch-light/brightness
+    chmod 0660 /sys/class/leds/torch-light/brightness
+
 on early-boot
     start ta_qmi_service
     start sct_service
