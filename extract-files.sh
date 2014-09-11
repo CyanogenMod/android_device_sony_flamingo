@@ -244,6 +244,7 @@ COMMON_LIB="
 	libmorpho_posture_detect.so
 	libmorpho_scene_detector.so
 	libmorpho_super_resolution.so
+	libnfc-nci.so
 	libpin-cache.so
 	libprotobuf-c.so
 	libqomx_core.so

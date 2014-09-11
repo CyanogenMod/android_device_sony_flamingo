@@ -141,16 +141,19 @@ PRODUCT_PACKAGES += \
     keystore.msm8974
 
 # NFC packages
-# PRODUCT_PACKAGES += \
-#    libnfc-nci \
-#    libnfc_nci_jni \
+PRODUCT_PACKAGES += \
+    libnfc-nci \
+    libnfc_nci_jni \
+    NfcNci \
+    Tag \
+    com.android.nfc_extras
 #    nfc_nci.msm8226 \
-#    NfcNci \
-#    Tag \
-#    com.android.nfc_extras
-#
+
 # NFCEE access control
-# NFCEE_ACCESS_PATH := $(COMMON_PATH)/rootdir/system/etc/nfcee_access.xml
+NFCEE_ACCESS_PATH := $(COMMON_PATH)/rootdir/system/etc/nfcee_access.xml
+
+PRODUCT_COPY_FILES += \
+    $(COMMON_PATH)/rootdir/system/etc/nfcee_access.xml:system/etc/nfcee_access.xml
 
 PRODUCT_COPY_FILES += \
     $(COMMON_PATH)/rootdir/system/etc/libnfc-brcm.conf:system/etc/libnfc-brcm.conf \
