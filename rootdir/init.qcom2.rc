@@ -48,7 +48,7 @@ on early-boot
     # set RLIMIT_MEMLOCK to 64MB
     setrlimit 8 67108864 67108864
     write /sys/kernel/boot_adsp/boot 1
-    exec /system/bin/sh /init.qcom.syspart_fixup.sh ${ro.serialno}
+    exec /system/bin/sh /system/etc/init.qcom.wifi.sh ${ro.serialno}
 
 on boot
     # bring CPUs online
