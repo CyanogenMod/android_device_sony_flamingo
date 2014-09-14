@@ -146,14 +146,6 @@ on property:service.proxcalib.start=service_setting
 on property:service.proxcalib.start=service_setting_default
     exec /system/bin/prox_cal_data_manager service_setting_default
 
-on property:init.svc.bootanim=stopped
-    start set-governor
-
-service set-governor /system/bin/sh /system/etc/set_governor.sh
-    user root
-    disabled
-    oneshot
-
 # Touch
 on property:persist.sys.touch.glove_mode=0
     write /sys/bus/ttsp4/devices/main_ttsp_core.cyttsp4_i2c_adapter/signal_disparity 0
