@@ -160,7 +160,6 @@ COMMON_BIN_EXTRAS="
 	qcom-system-daemon
 	qseecomd
 	rfs_access
-	rild
 	sensors.qcom
 	"
 copy_files "$COMMON_BIN_EXTRAS" "system/bin" "bin"
@@ -248,9 +247,6 @@ COMMON_LIB="
 	libpin-cache.so
 	libprotobuf-c.so
 	libqomx_core.so
-	libreference-ril.so
-	libril.so
-	librilutils.so
 	libsys-utils.so
 	libsysmon.so
 	libsysmon_idd.so
