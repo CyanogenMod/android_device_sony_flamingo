@@ -146,13 +146,6 @@ on property:service.proxcalib.start=service_setting
 on property:service.proxcalib.start=service_setting_default
     exec /system/bin/prox_cal_data_manager service_setting_default
 
-# Touch
-on property:persist.sys.touch.glove_mode=0
-    write /sys/bus/ttsp4/devices/main_ttsp_core.cyttsp4_i2c_adapter/signal_disparity 0
-
-on property:persist.sys.touch.glove_mode=1
-    write /sys/bus/ttsp4/devices/main_ttsp_core.cyttsp4_i2c_adapter/signal_disparity 1
-
 # Start suntrold
 service suntrold /system/bin/suntrold
     user system

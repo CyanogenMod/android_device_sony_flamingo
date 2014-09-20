@@ -33,7 +33,8 @@ TARGET_BOARD_PLATFORM := msm8226
 BOARD_VENDOR_PLATFORM := yukon
 
 # Architecture
-TARGET_CPU_VARIANT := cortex-a7
+# Purposefully krait due to lack of cortex-a7 optimizations in clang
+TARGET_CPU_VARIANT := krait
 
 # Flags
 TARGET_GLOBAL_CFLAGS += -mfpu=neon-vfpv4 -mfloat-abi=softfp

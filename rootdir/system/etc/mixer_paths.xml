@@ -935,7 +935,7 @@
         <ctl name="RX2 Digital Volume" value="84" />
         <ctl name="RX4 MIX1 INP1" value="RX1" />
         <ctl name="RX4 MIX1 INP2" value="RX2" />
-        <ctl name="RX4 Digital Volume" value="84" />
+        <ctl name="RX4 Digital Volume" value="88" />
         <ctl name="SPK DAC Switch" value="1" />
         <ctl name="COMP0 Switch" value="1" />
     </path>
