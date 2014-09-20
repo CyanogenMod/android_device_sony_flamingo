@@ -59,8 +59,7 @@ PRODUCT_COPY_FILES += \
     $(COMMON_PATH)/rootdir/init.qcom2.rc:root/init.qcom.rc \
     $(COMMON_PATH)/rootdir/init.sony2.rc:root/init.sony.rc \
     $(COMMON_PATH)/rootdir/init.sony.usb.rc:root/init.sony.usb.rc \
-    $(COMMON_PATH)/rootdir/ueventd.qcom.rc:root/ueventd.qcom.rc \
-    $(COMMON_PATH)/rootdir/system/etc/set_governor.sh:system/etc/set_governor.sh
+    $(COMMON_PATH)/rootdir/ueventd.qcom.rc:root/ueventd.qcom.rc
 
 # Init
 # PRODUCT_COPY_FILES += \
