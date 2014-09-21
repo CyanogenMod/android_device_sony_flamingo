@@ -61,14 +61,6 @@ PRODUCT_COPY_FILES += \
     $(COMMON_PATH)/rootdir/init.sony.usb.rc:root/init.sony.usb.rc \
     $(COMMON_PATH)/rootdir/ueventd.qcom.rc:root/ueventd.qcom.rc
 
-# Init
-# PRODUCT_COPY_FILES += \
-#    $(COMMON_PATH)/rootdir/init.qcom.rc:root/init.qcom.rc \
-#    $(COMMON_PATH)/rootdir/init.sony.rc:root/init.sony.rc \
-#    $(COMMON_PATH)/rootdir/init.sony-platform.rc:root/init.sony-platform.rc \
-#    $(COMMON_PATH)/rootdir/init.sony-device.rc:root/init.sony-device.rc \
-#    $(COMMON_PATH)/rootdir/init.target.rc:root/init.target.rc \
-
 # Keys and Touchscreens
 PRODUCT_COPY_FILES += \
     $(COMMON_PATH)/rootdir/system/usr/idc/cyttsp4_mt.idc:system/usr/idc/cyttsp4_mt.idc \
