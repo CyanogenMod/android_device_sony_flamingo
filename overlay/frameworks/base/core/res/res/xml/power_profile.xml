@@ -46,6 +46,7 @@
         <value>155.9</value>
         <value>159.3</value>
     </array>
-    <item name="cpu.awake">16.02</item>
+    <item name="cpu.awake">66.2</item>
+    <item name="cpu.wakeup">121.72</item>
     <item name="battery.capacity">3000</item>
 </device>
