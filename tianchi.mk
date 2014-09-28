@@ -213,5 +213,5 @@ PRODUCT_PROPERTY_OVERRIDES += \
 $(call inherit-product-if-exists, frameworks/native/build/phone-xhdpi-1024-dalvik-heap.mk)
 
 # Include non-opensource parts
-$(call inherit-product, vendor/sony/tianchi/tianchi-vendor-blobs.mk)
+$(call inherit-product, vendor/sony/tianchi/tianchi-vendor.mk)
 
