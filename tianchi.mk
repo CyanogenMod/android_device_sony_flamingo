@@ -92,8 +92,15 @@ PRODUCT_PACKAGES += \
     audio.usb.default \
     audio_policy.msm8226
 
+PRODUCT_PACKAGES += \
+    libaudio-resampler \
+    libqcompostprocbundle \
+    libqcomvisualizer \
+    libqcomvoiceprocessing \
+    tinymix
+
 PRODUCT_COPY_FILES += \
-    $(COMMON_PATH)/rootdir/system/etc/audio_effects.conf:system/etc/audio_effects.conf \
+    $(COMMON_PATH)/rootdir/system/vendor/etc/audio_effects.conf:system/vendor/etc/audio_effects.conf \
     $(COMMON_PATH)/rootdir/system/etc/audio_policy.conf:system/etc/audio_policy.conf \
     $(COMMON_PATH)/rootdir/system/etc/mixer_paths.xml:system/etc/mixer_paths.xml \
 
@@ -137,8 +144,8 @@ PRODUCT_PACKAGES += \
     libnfc_nci_jni \
     NfcNci \
     Tag \
-    com.android.nfc_extras
-#    nfc_nci.msm8226 \
+    com.android.nfc_extras \
+    nfc_nci.msm8226
 
 # NFCEE access control
 NFCEE_ACCESS_PATH := $(COMMON_PATH)/rootdir/system/etc/nfcee_access.xml
@@ -148,8 +155,7 @@ PRODUCT_COPY_FILES += \
 
 PRODUCT_COPY_FILES += \
     $(COMMON_PATH)/rootdir/system/etc/libnfc-brcm.conf:system/etc/libnfc-brcm.conf \
-    $(COMMON_PATH)/rootdir/system/etc/libnfc-nxp.conf:system/etc/libnfc-nxp.conf \
-    $(COMMON_PATH)/rootdir/system/etc/nfc-nci.conf:system/etc/nfc-nci.conf
+    $(COMMON_PATH)/rootdir/system/etc/libnfc-nxp.conf:system/etc/libnfc-nxp.conf
 
 # Media recording
 PRODUCT_COPY_FILES += \
@@ -213,5 +219,5 @@ PRODUCT_PROPERTY_OVERRIDES += \
 $(call inherit-product-if-exists, frameworks/native/build/phone-xhdpi-1024-dalvik-heap.mk)
 
 # Include non-opensource parts
-$(call inherit-product, vendor/sony/tianchi/tianchi-vendor-blobs.mk)
+$(call inherit-product, vendor/sony/tianchi/tianchi-vendor.mk)
 

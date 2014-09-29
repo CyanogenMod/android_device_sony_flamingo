@@ -22,7 +22,7 @@ $(call inherit-product, vendor/cm/config/nfc_enhanced.mk)
 $(call inherit-product, vendor/cm/config/common_full_phone.mk)
 
 # Build fingerprints
-PRODUCT_BUILD_PROP_OVERRIDES += PRODUCT_NAME=D5303 BUILD_FINGERPRINT=Sony/D5303/D5303:4.4.2/19.1.A.0.473/Jv5_Zw:user/release-keys PRIVATE_BUILD_DESC="D5303-user 4.4.2 19.1.A.0.473 Jv5_Zw release-keys"
+PRODUCT_BUILD_PROP_OVERRIDES += PRODUCT_NAME=D5303 BUILD_FINGERPRINT=Sony/D5303/D5303:4.4.3/19.1.1.A.0.165/Wv93Zw:user/release-keys PRIVATE_BUILD_DESC="D5303-user 4.4.3 19.1.1.A.0.165 Wv93Zw release-keys"
 
 PRODUCT_NAME := cm_tianchi
 PRODUCT_DEVICE := tianchi
