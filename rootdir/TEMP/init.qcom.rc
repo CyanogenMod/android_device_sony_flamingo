@@ -1,5 +1,5 @@
 # Copyright (c) 2009-2012, The Linux Foundation. All rights reserved.
-# Copyright (C) 2012, Sony Mobile Communications AB.
+# Copyright (C) 2012-2013 Sony Mobile Communications AB.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
@@ -29,13 +29,10 @@
 # Modifications are licensed under the License.
 #
 
-#<2014/03/21-tonypeng-35105, B[All][Main][USB][DMS05339959] Support PC Companion
-# 2014/3/25 hilbert-35244 [All][Main][USB][DMS05339959] Support PC Companion -B
 import init.qcom.usb.rc
 #import init.sony.usb.rc
-# 2014/3/25 hilbert-35244 [All][Main][USB][DMS05339959] Support PC Companion -E
-#>2014/03/21-tonypeng-35105
 import init.target.rc
+import init.sony-device.rc
 
 on early-init
     mount debugfs debugfs /sys/kernel/debug
@@ -45,35 +42,30 @@ on init
     mkdir /persist 0771 system system
     # See storage config details at http://source.android.com/tech/storage/
     mkdir /mnt/shell/emulated 0700 shell shell
-# B[All][Main][Storage][DMS05639494][41116][akenhsu] CTS issue: android.tests.appsecurity solved testExternalStorage items 20140717 BEGIN
-    # mkdir /storage 0050 system sdcard_r
-# B[All][Main][Storage][DMS05639494][41116][akenhsu] 20140717 END
     mkdir /storage/emulated 0555 root root
     mkdir /storage/emulated/legacy 0555 root root
     mkdir /mnt/media_rw/sdcard1 0700 media_rw media_rw
-    mkdir /storage/sdcard1 0700 root root
+    mkdir /mnt/media_rw/usbdisk 0700 media_rw media_rw
 
     export EXTERNAL_STORAGE /storage/emulated/legacy
-# [Arima_E2][34287] Modify for Secondary physical SD Card Sony Feature S
-#//<2014/04/07-35811-kevinchiu,F[All][Main][Email][DMS05375928] [So]I&V-RT-��Unfortunately, Email has stopped�� when you activate EAS account..
-    #export SECONDARY_STORAGE /storage/sdcard1:/storage/usbdisk
-	export SECONDARY_STORAGE /storage/sdcard1
-#//>2014/04/07-35811-kevinchiu
-# [Arima_E2][34287] Modify for Secondary physical SD Card Sony Feature E
     export EMULATED_STORAGE_SOURCE /mnt/shell/emulated
     export EMULATED_STORAGE_TARGET /storage/emulated
+
+    # secondary external storage
+    mkdir /storage/sdcard1 0700 root root
+    symlink /storage/sdcard1 /sdcard1
+    export SECONDARY_STORAGE /storage/sdcard1
+
+    # External USB mass storage support
+    mkdir /storage/usbdisk 0700 root root
+    symlink /storage/usbdisk /usbdisk
+    export EXTERNAL_STORAGE_USB /storage/usbdisk
 
     # Support legacy paths
     symlink /storage/emulated/legacy /sdcard
     symlink /storage/emulated/legacy /mnt/sdcard
     symlink /storage/emulated/legacy /storage/sdcard0
-# B[All][Main][Storage][DMS05639494][41116][akenhsu] CTS issue: android.tests.appsecurity solved testExternalStorage items 20140717 BEGIN
-	symlink /mnt/shell/emulated/0 /storage/emulated/legacy
-# B[All][Main][Storage][DMS05639494][41116][akenhsu] 20140717 END
-    #//<2014/05/04-37300-JamesZhou,F[All][Main][Email][DMS05377748][Ar]ST1-GST-<5908_Email>-<Sign/Encrypt Email account can not install certificates successfully in EAS Email.>
-    symlink /storage/sdcard1 /sdcard1
-    #//>2014/05/04-37300-JamesZhou
-
+    symlink /mnt/shell/emulated/0 /storage/emulated/legacy
 
 on early-boot
     # set RLIMIT_MEMLOCK to 64MB
@@ -119,13 +111,9 @@ on boot
 
     setprop wifi.interface wlan0
 
-#//<20140327,tonypeng, F[All][Main][Kernel] SoMC DMS04952686 patch for FP 18576.
 #   Define TCP buffer sizes for various networks
 #   ReadMin, ReadInitial, ReadMax, WriteMin, WriteInitial, WriteMax,
-# B[All][Main][WiFi][DMS05405555] Improve WiFi throughput 20140425 - Start
     setprop net.tcp.buffersize.wifi    524288,2097152,4194304,262144,524288,1048576
-# B[All][Main][WiFi][DMS05405555] Improve WiFi throughput 20140425 - End   
-#//>20140327,tonypeng
 
 
     setprop ro.telephony.call_ring.multiple false
@@ -143,7 +131,6 @@ on boot
     #For bridgemgr daemon to inform the USB driver of the correct transport
     chown radio radio /sys/class/android_usb/f_rmnet_smd_sdio/transport
 
-#//<20140327,tonypeng, F[All][Main][Kernel] SoMC DMS04952686 patch for FP 18576.
 #   Define TCP buffer sizes for various networks
 #   ReadMin, ReadInitial, ReadMax, WriteMin, WriteInitial, WriteMax,
     setprop net.tcp.buffersize.default 4096,87380,110208,4096,16384,110208
@@ -161,7 +148,6 @@ on boot
 #   Increased technology maximums should be reflected here.
     write /proc/sys/net/core/rmem_max  2560000
     write /proc/sys/net/core/wmem_max  1048576
-#//>20140327,tonypeng
 
     #To allow interfaces to get v6 address when tethering is enabled
     write /proc/sys/net/ipv6/conf/rmnet0/accept_ra 2
@@ -201,6 +187,9 @@ on boot
     # Set the default message loglevel to KERN_INFO
     write /proc/sys/kernel/printk "6 6 1 7"
 
+on fs
+    setprop ro.crypto.fuse_sdcard true
+
 # msm specific files that need to be created on /data
 on post-fs-data
     # we will remap this as /mnt/sdcard with the sdcard fuse tool
@@ -214,9 +203,7 @@ on post-fs-data
     mkdir /data/misc/wifi/sockets 0770 wifi wifi
     mkdir /data/misc/wifi/wpa_supplicant 0770 wifi wifi
     mkdir /data/misc/dhcp 0770 dhcp dhcp
-# somc_patch_2014-01-02-Additional begin
     chown dhcp system /data/misc/dhcp
-# somc_patch_2014-01-02-Additional end
 
     # Create the directories used by CnE subsystem
     mkdir /data/connectivity 0771 system system
@@ -273,10 +260,6 @@ on post-fs-data
     mkdir /data/time/ 0700 system system
 
     mkdir /data/audio/ 0770 media audio
-
-    #//<2014/5/9-A000000037744-JamesZhou, Move xperia_keyboard_dictionaries to /Data/persist
-    mkdir /data/persist/xperia_keyboard_dictionaries/ 0777 root root
-    #//>2014/5/9-A000000037744-JamesZhou
 
     setprop vold.post_fs_data_done 1
 
@@ -408,10 +391,7 @@ service config_bluetooth /system/bin/sh /system/etc/init.qcom.bt.sh "onboot"
 service hciattach /system/bin/sh /system/etc/init.qcom.bt.sh
     class late_start
     user bluetooth
-# [All][Main][Bluetooth][DMS][33891][michaelchen] Read/write BT MAC address from MiscTA directly. 2014/02/17 BEGIN
     group bluetooth net_bt_admin system
-#    group bluetooth net_bt_admin
-# [All][Main][Bluetooth][DMS][33891][michaelchen] 2014/02/17 BEGIN
     disabled
     oneshot
 
@@ -548,9 +528,7 @@ service wpa_supplicant /system/bin/wpa_supplicant \
     disabled
     oneshot
 
-# somc_patch_2014-01-02-Additional begin
 service dhcpcd_wlan0 /system/bin/dhcpcd -B -d -t 30
-# somc_patch_2014-01-02-Additional end
     class late_start
     disabled
     oneshot
@@ -570,21 +548,17 @@ service iprenew_p2p /system/bin/dhcpcd -n
     disabled
     oneshot
 
-# [All][Main][SSEV][41975][LuboLu] Dynamic enable FTM services based on TA_3018(PCBA_SW flag) 20140729 begin
-# [Arima_BSP][WIFI][34622][ParisKuong] Modify for RF test 2014/03/07 begin
-#service ptt_socket_app /system/bin/ptt_socket_app -d
-#    class main
-#    user root
-#    group root
-#    oneshot
+service ptt_socket_app /system/bin/ptt_socket_app
+    class main
+    user system
+    group system
+    oneshot
 
-#service ptt_ffbm /system/bin/ptt_socket_app -f -d
-#    user root
-#    group root
-#    disabled
-#    oneshot
-# [Arima_BSP][WIFI][34622][ParisKuong] Modify for RF test 2014/03/07 end
-# [All][Main][SSEV][41975][LuboLu] 20140729 end
+service ptt_ffbm /system/bin/ptt_socket_app -v -d -f
+    class pcba_start
+    user root
+    group root
+    oneshot
 
 service dhcpcd_bt-pan /system/bin/dhcpcd -BKLG
     class late_start
@@ -708,14 +682,6 @@ service wifi-crda /system/bin/sh /system/etc/init.crda.sh
    disabled
    oneshot
 
-#<2014/03/25-hilbert-35246, [All][Main][USB][DMS]FP17945 USB-Ethernet 
-service dhcpcd_eth0 /system/bin/dhcpcd -B -d -t 30
-    class late_start
-    disabled
-    oneshot
-#>2014/03/25-hilbert-35246
-
-#<2014/03/25-hilbert-35244, [All][Main][USB][DMS05339959] Support PC Companion
 service SEMC-sh /system/bin/sh /init.usbmode.sh
     class late_start
     user root
@@ -733,7 +699,6 @@ on property:sys.usb.config=mtp,cdrom
 
 on property:sys.usb.config=mtp,cdrom,adb
     write /sys/class/android_usb/android0/f_mass_storage/lun/file /system/etc/dop.iso
-#<2014/03/25-hilbert-35244
 
 on property:sys.boot_completed=1
     start qcom-post-boot
@@ -798,32 +763,16 @@ service profiler_daemon /system/bin/profiler_daemon
     group root
     disabled
 
-# B[All][Main][Storage][DMS05639494][41116][akenhsu] CTS issue: android.tests.appsecurity solved testExternalStorage items 20140717 BEGIN
-on fs 
-    setprop ro.crypto.fuse_sdcard true 
-# B[All][Main][Storage][DMS05639494][41116][akenhsu] 20140717 END
-
-
-# B[All][Main][Storage][DMS05639494][41116][akenhsu] CTS issue: android.tests.appsecurity solved testExternalStorage items 20140717 BEGIN
-#service sdcard /system/bin/sdcard /data/media /mnt/shell/emulated 1023 1023
 service sdcard /system/bin/sdcard -u 1023 -g 1023 -l /data/media /mnt/shell/emulated
-# B[All][Main][Storage][DMS05639494][41116][akenhsu] 20140717 END
     class late_start
 
-# /*[All][Main][SD][DMC][32740] FIX SD CARD HOT SWAP ISSUE S*/
-# B[All][Main][Storage][DMS05639494][41116][akenhsu] CTS issue: android.tests.appsecurity solved testExternalStorage items 20140717 BEGIN
-#service fuse_sdcard1 /system/bin/sdcard -u 1023 -g 1023 -d /mnt/media_rw/sdcard1 /storage/sdcard1 
 service fuse_sdcard1 /system/bin/sdcard -u 1023 -g 1023 -w 1023 -d /mnt/media_rw/sdcard1 /storage/sdcard1
-# B[All][Main][Storage][DMS05639494][41116][akenhsu] 20140717 END
     class late_start
     disabled
 
-# B[All][Main][Storage][DMS05639494][41116][akenhsu] CTS issue: android.tests.appsecurity solved testExternalStorage items 20140717 BEGIN
-# on property:ro.fuse_sdcard=true
-#     start sdcard
-# B[All][Main][Storage][DMS05639494][41116][akenhsu] 20140717 END
-#    start fuse_sdcard
-# /*[All][Main][SD][DMC][32740] FIX SD CARD HOT SWAP ISSUE E*/
+service fuse_usbdisk /system/bin/sdcard -u 1023 -g 1023 /mnt/media_rw/usbdisk /storage/usbdisk
+    class late_start
+    disabled
 
 # Binding fuse mount point to /storage/emulated/legacy
 on property:init.svc.sdcard=running
