@@ -1,0 +1,361 @@
+# Copyright (c) 2012, The Linux Foundation. All rights reserved.
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are
+# met:
+#     * Redistributions of source code must retain the above copyright
+#       notice, this list of conditions and the following disclaimer.
+#     * Redistributions in binary form must reproduce the above
+#       copyright notice, this list of conditions and the following
+#       disclaimer in the documentation and/or other materials provided
+#       with the distribution.
+#     * Neither the name of The Linux Foundation nor the names of its
+#       contributors may be used to endorse or promote products derived
+#       from this software without specific prior written permission.
+#
+# THIS SOFTWARE IS PROVIDED "AS IS" AND ANY EXPRESS OR IMPLIED
+# WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT
+# ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS
+# BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+# CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+# SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
+# BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+# WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+# OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
+# IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+#
+#
+
+on early-init
+    mkdir /firmware 0771 system system
+    symlink /data/tombstones /tombstones
+
+# [All][Main][LCM][DMS][40541][StevenChen] Fix OTG connection problem of multiple LUN device 2014/07/02 begin
+# [Arima5908][32767][StevenChen] Enable USB OTG mass storage function 2014/01/08 begin
+on init
+    mkdir /mnt/media_rw/usbdisk 0700 media_rw media_rw
+    mkdir /storage/usbdisk 0700 root root
+    symlink /storage/usbdisk /usbdisk	
+    export EXTERNAL_STORAGE_USB /storage/usbdisk
+
+# [Arima5908][32767][StevenChen] Enable USB OTG mass storage function 2014/01/08 end
+# [All][Main][LCM][DMS][40541][StevenChen] Fix OTG connection problem of multiple LUN device 2014/07/02 end
+
+# [Arima5911][34881][bozhi_lin] enable factory reset feature in S1 20140314 begin
+# on fs
+#    mount_all fstab.qcom
+# [Arima5911][34881][bozhi_lin] 20140314 end
+
+    # Keeping following partitions outside fstab file. As user may not have
+    # these partition flashed on the device. Failure to mount any partition in fstab file
+    # results in failure to launch late-start class.
+
+# [Arima5911][34881][bozhi_lin] enable factory reset feature in S1 20140314 begin
+#    wait /dev/block/platform/msm_sdcc.1/by-name/cache
+#    mount ext4 /dev/block/platform/msm_sdcc.1/by-name/cache /cache nosuid nodev barrier=1
+# [Arima5911][34881][bozhi_lin] 20140314 end
+
+    #//<2014/02/05-33557-jackliao, [All][Main][S1]Memory layout for S1 partition
+    #wait /dev/block/platform/msm_sdcc.1/by-name/persist
+    #mount ext4 /dev/block/platform/msm_sdcc.1/by-name/persist /persist nosuid nodev barrier=1
+    
+    #wait /dev/block/platform/msm_sdcc.1/by-name/modem
+    #mount vfat /dev/block/platform/msm_sdcc.1/by-name/modem /firmware ro shortname=lower,uid=1000,gid=1000,dmask=227,fmask=337
+    #//>2014/02/05-33557-jackliao
+# [Arima5911][34881][bozhi_lin] enable factory reset feature in S1 20140314 begin
+#    write /sys/kernel/boot_adsp/boot 1
+# [Arima5911][34881][bozhi_lin] 20140314 end
+
+on post-fs-data
+    mkdir /data/tombstones 0771 system system
+    mkdir /tombstones/modem 0771 system system
+
+# import cne init file
+on post-fs
+    export LD_PRELOAD /vendor/lib/libNimsWrap.so
+
+# [All][Main][Setting][DMS05526881][40591][StevenChen] Patch from TS to fix the "white balance" of phone doesn't have effect after restarting phone 2014/07/02 begin
+    # Display color correction is needed in charge only mode as well.
+    start display_cc
+# [All][Main][Setting][DMS05526881][40591][StevenChen] Patch from TS to fix the "white balance" of phone doesn't have effect after restarting phone 2014/07/02 end
+
+on boot
+    insmod /system/lib/modules/adsprpc.ko
+    # Enable writing to led blink node from userspace
+    chown system system /sys/class/leds/red/blink
+    chown system system /sys/class/leds/green/blink
+#//<2014/05/20-38311-chrislin, F[All][Main][Devices][] FP 18818 Shut down animation for each component CDF in a Multi-CDF kit _Part2
+    # Create symlinks for customized files
+#    F[All][Main][MultiCDF][ParisKuong] multi-cdf-symlinker.sh should be executed after updatemiscta service 20140806, begin    
+#    exec /system/bin/sh /system/bin/multi-cdf-symlinker.sh
+#    F[All][Main][MultiCDF][ParisKuong] multi-cdf-symlinker.sh should be executed after updatemiscta service 20140806, end    
+#//>2014/05/20-38311-chrislin
+    # Enable writing to brightness node under torch-light from userspace
+    chown system system /sys/class/leds/torch-light/brightness
+#/* [Arima5908][32708][JessicaTseng] [All][Main][LED][DMS]Porting R/G/B LED 20140103 start */
+    chown system system /sys/class/leds/blue/blink
+    chown system system /sys/class/leds/red/pause_hi
+    chown system system /sys/class/leds/red/pause_lo
+    chown system system /sys/class/leds/green/pause_hi
+    chown system system /sys/class/leds/green/pause_lo
+    chown system system /sys/class/leds/blue/pause_hi
+    chown system system /sys/class/leds/blue/pause_lo
+#/* [Arima5908][32708][JessicaTseng] [All][Main][LED][DMS]Porting R/G/B LED 20140103 end */
+
+# /* --- [All][Main][NFC][DMS][LuboLu] Porting NFC(NXP PN547). 20140103 begin --- */
+# permissions for NFC
+#//<2014/4/23-jazzchiang-36803[All][Main][NFC][] To change properties of dev/pn544 by following Setup Guideline.
+    setprop ro.nfc.port "I2C"
+    chmod 0660 /dev/pn544
+    #chmod 0600 /dev/pn544
+#//>2014/4/23-jazzchiang-36803[All][Main][NFC][] To change properties of dev/pn544 by following Setup Guideline.
+    chown nfc nfc /dev/pn544
+    mkdir /data/nfc
+    mkdir /system/etc/param/
+# /* --- [All][Main][NFC][DMS][LuboLu] 20140103 end   --- */
+
+# B[ALL][Main][Audio][DMS05405566][41893][LuboLu] Fix mp3 playback current consumption to high. 20140725 begin
+    chown root audio /sys/module/lpm_levels/enable_low_power/l2
+    chmod 0664 /sys/module/lpm_levels/enable_low_power/l2
+# B[ALL][Main][Audio][DMS05405566][41893][LuboLu] 20140725 end
+
+#[All][Main][LCM][DMS][38571][StevenChen] Set permission and owner for fix CTS permission issue 2014/05/26 begin
+#[Arima5908][33643][StevenChen] Fix reading LCM ID issue 2014/02/10 begin
+#[Arima5908][33534][StevenChen] Read LCM ID for ATS 2014/01/30 begin
+    chown root root /sys/class/graphics/fb0/lcm_module_id
+    chmod 0644 /sys/class/graphics/fb0/lcm_module_id
+#[Arima5908][33534][StevenChen] Read LCM ID for ATS 2014/01/30 end
+#[Arima5908][33643][StevenChen] Fix reading LCM ID issue 2014/02/10 end
+#[All][Main][LCM][DMS][38571][StevenChen] Set permission and owner for fix CTS permission issue 2014/05/26 end
+# [Arima5908][41012][bozhi_lin] fix cts failed on /dev/isdbt permission 20140710 begin
+# [Arima5908][34585][bozhi_lin] build-in isdbtd for app development 20140307 begin
+    chmod 0660 /dev/isdbt
+# [Arima5908][34585][bozhi_lin] 20140307 end
+# [Arima5908][41012][bozhi_lin] 20140710 end
+
+# [Arima5908][32956][StevenChen] Fix USB OTG mass storage issue 2014/01/10 begin
+# [Arima5908][32767][StevenChen] Enable USB OTG mass storage function 2014/01/08 begin
+service fuse_usbdisk /system/bin/sdcard -u 1023 -g 1023 -d /mnt/media_rw/usbdisk /storage/usbdisk
+    class late_start
+    disabled
+# [Arima5908][32767][StevenChen] Enable USB OTG mass storage function 2014/01/08 end
+# [Arima5908][32956][StevenChen] Fix USB OTG mass storage issue 2014/01/10 end
+
+# [All][Main][Setting][DMS05526881][40591][StevenChen] Patch from TS to fix the "white balance" of phone doesn't have effect after restarting phone 2014/07/02 begin
+on property:vold.decrypt=trigger_restart_framework
+    start display_cc
+# [All][Main][Setting][DMS05526881][40591][StevenChen] Patch from TS to fix the "white balance" of phone doesn't have effect after restarting phone 2014/07/02 end
+
+# [Arima5908][32739][bozhi_lin] enable ghost charging mode 20140103 begin
+on charger
+    wait /dev/block/platform/msm_sdcc.1/by-name/system
+    mount ext4 /dev/block/platform/msm_sdcc.1/by-name/system /system rw barrier=1
+
+# [Arima5911][35987][bozhi_lin] Fix off charging mode will crash by MODEM_RESET 20140410 begin
+    wait /dev/block/platform/msm_sdcc.1/by-name/TA
+    class_start trimarea
+    exec /sbin/wait4tad_static
+    
+    wait /dev/block/platform/msm_sdcc.1/by-name/LTALabel
+    mount ext4 /dev/block/platform/msm_sdcc.1/by-name/LTALabel /lta-label nosuid nodev noatime noexec ro barrier=0
+    
+    start sct_service
+    
+    start ta_qmi_service
+# [Arima5911][35987][bozhi_lin] 20140410 end
+
+    # [Arima5908][36108][bozhi_lin] low cpu frequency on off charging mode to increase charging current 20140413 begin
+    write /sys/module/msm_pm/modes/cpu0/power_collapse/suspend_enabled 1
+    write /sys/module/msm_pm/modes/cpu1/power_collapse/suspend_enabled 1
+    write /sys/module/msm_pm/modes/cpu2/power_collapse/suspend_enabled 1
+    write /sys/module/msm_pm/modes/cpu3/power_collapse/suspend_enabled 1
+    write /sys/module/msm_pm/modes/cpu0/power_collapse/idle_enabled 1
+    write /sys/module/msm_pm/modes/cpu1/power_collapse/idle_enabled 1
+    write /sys/module/msm_pm/modes/cpu2/power_collapse/idle_enabled 1
+    write /sys/module/msm_pm/modes/cpu3/power_collapse/idle_enabled 1
+    write /sys/module/msm_pm/modes/cpu0/standalone_power_collapse/suspend_enabled 1
+    write /sys/module/msm_pm/modes/cpu1/standalone_power_collapse/suspend_enabled 1
+    write /sys/module/msm_pm/modes/cpu2/standalone_power_collapse/suspend_enabled 1
+    write /sys/module/msm_pm/modes/cpu3/standalone_power_collapse/suspend_enabled 1
+    write /sys/module/msm_pm/modes/cpu0/standalone_power_collapse/idle_enabled 1
+    write /sys/module/msm_pm/modes/cpu1/standalone_power_collapse/idle_enabled 1
+    write /sys/module/msm_pm/modes/cpu2/standalone_power_collapse/idle_enabled 1
+    write /sys/module/msm_pm/modes/cpu3/standalone_power_collapse/idle_enabled 1
+
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor "ondemand"
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 300000
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq 300000
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_setspeed 300000
+
+    write /sys/devices/system/cpu/cpu1/online 0
+    write /sys/devices/system/cpu/cpu2/online 0
+    write /sys/devices/system/cpu/cpu3/online 0
+    # [Arima5908][36108][bozhi_lin] 20140413 end 
+    
+    setprop sys.usb.config adb
+# [Arima5908][32739][bozhi_lin] 20140103 end
+
+#Start the qcom-system-daemon service
+service qcomsysd /system/bin/qcom-system-daemon
+    class main
+
+#start camera server as daemon
+service qcamerasvr /system/bin/mm-qcamera-daemon
+    class late_start
+    user camera
+    group camera system inet input graphics
+
+# Allow usb charging to be disabled persistently
+on property:persist.usb.chgdisabled=1
+   write /sys/class/power_supply/battery/charging_enabled 0
+
+on property:persist.usb.chgdisabled=0
+   write /sys/class/power_supply/battery/charging_enabled 1
+
+service time_daemon /system/bin/time_daemon
+   class late_start
+   user root
+   group root
+
+service mpdecision /system/bin/mpdecision --no_sleep --avg_comp
+   user root
+   disabled
+
+#start GNSS/Sensor interface daemon
+service gsiff_daemon /system/bin/gsiff_daemon
+   class late_start
+   user system
+   group gps net_raw
+
+service thermal-engine /system/bin/thermal-engine
+   class main
+   user root
+   group root
+
+service qrngd /system/bin/qrngd -f
+    class main
+    user root
+    group root
+
+
+service qrngp /system/bin/qrngp
+    class main
+    user root
+    group root
+    oneshot
+    disabled
+
+on property:sys.boot_completed=1
+    start qrngp
+
+# [All][Main][Setting][DMS05526881][40591][StevenChen] Patch from TS to fix the "white balance" of phone doesn't have effect after restarting phone 2014/07/02 begin
+# display color calibration
+service display_cc /system/bin/display_color_calib
+    class main
+    oneshot
+    disabled
+# [All][Main][Setting][DMS05526881][40591][StevenChen] Patch from TS to fix the "white balance" of phone doesn't have effect after restarting phone 2014/07/02 end
+
+service qseecomd /system/bin/qseecomd
+    class late_start
+    user root
+    group root
+
+service audiod /system/bin/audiod
+   class late_start
+   user system
+   group system
+
+service adsprpcd /system/bin/adsprpcd
+   class main
+   user media
+   group media
+
+service imsqmidaemon /system/bin/imsqmidaemon
+    class main
+    user system
+    socket ims_qmid stream 0660 system radio
+    group ims radio net_raw log qcom_diag
+
+service imsdatadaemon /system/bin/imsdatadaemon
+    class main
+    user system
+    socket ims_datad stream 0660 system radio
+    group system ims wifi radio inet net_raw log qcom_diag net_admin
+    disabled
+
+on property:sys.ims.QMI_DAEMON_STATUS=1
+    start imsdatadaemon
+
+service ims_rtp_daemon /system/bin/ims_rtp_daemon
+   class main
+   user system
+   socket ims_rtpd stream 0660 system ims
+   group ims net_raw diag qcom_diag log
+   disabled
+
+on property:sys.ims.DATA_DAEMON_STATUS=1
+    start ims_rtp_daemon
+
+service wcnss-service /system/bin/wcnss_service
+   class late_start
+   user system
+   group system wifi
+   oneshot
+
+service ppd /system/bin/mm-pp-daemon
+    class late_start
+    user system
+    socket pps stream 0660 system system
+    group system graphics
+
+on property:init.svc.surfaceflinger=stopped
+    stop ppd
+
+#    F[All][Main][MultiCDF][ParisKuong] multi-cdf-symlinker.sh should be executed after updatemiscta service 20140806, begin 
+#CONN-FY-WIFI-multiCDF_symlinks++
+service wifi_multiCDF /system/bin/logwrapper /system/bin/sh /system/bin/multi-cdf-symlinker.sh
+    class late_start
+    user root
+    oneshot
+#CONN-FY-WIFI-multiCDF_symlinks--
+#    F[All][Main][MultiCDF][ParisKuong] multi-cdf-symlinker.sh should be executed after updatemiscta service 20140806, end 
+
+# /* --- [All][Main][WiFi][DMS][33437] Make WiFi firmware version readable in the function test. BEGIN --- */
+on property:wlan.driver.status=ok
+    chmod 0664 /sys/class/net/wlan0/device/wcnss_version
+# /* --- [All][Main][WiFi][DMS][33437] END   --- */
+
+# [Arima5908][39559][bozhi_lin] remove build-in isdbtd because isdbtd is already integrated into apk 20140613 begin
+# [Arima5908][34585][bozhi_lin] build-in isdbtd for app development 20140307 begin
+# service isdbtd /system/bin/isdbtd 
+#    class main   
+# [Arima5908][34585][bozhi_lin] 20140307 end
+# [Arima5908][39559][bozhi_lin] 20140613 end
+
+# [All][Main][SSEV][41975][LuboLu] Dynamic enable FTM services based on TA_3018(PCBA_SW flag) 20140729 begin
+service ftmdaemon /system/bin/ftmdaemon
+    class pcba_start
+    user root
+    group root
+    oneshot
+
+service ptt_ffbm /system/bin/ptt_socket_app -v -d -f
+    class pcba_start
+    user root
+    group root
+    oneshot
+
+service ptt_socket_app /system/bin/ptt_socket_app -d
+    user root
+    group root
+    oneshot
+
+on property:ro.boot.sw.pcba=1
+    class_start pcba_start
+    
+on property:ro.boot.sw.pcba=0
+    start ptt_socket_app
+# [All][Main][41975][SSEV][LuboLu] 20140729 end
+
