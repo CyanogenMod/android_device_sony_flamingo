@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-char const*const LCD_BACKLIGHT_FILE  = "/sys/class/leds/lm3630-lcd-bl/brightness";
+char const*const LCD_BACKLIGHT_FILE  = "/sys/class/leds/wled:backlight/brightness";
 char const*const LCD_BACKLIGHT2_FILE = "/dev/null";
-char const*const MAX_BRIGHTNESS_FILE = "/sys/class/leds/lm3630-lcd-bl/max_brightness";
+char const*const MAX_BRIGHTNESS_FILE = "/sys/class/leds/wled:backlight/max_brightness";
 const int LCD_BRIGHTNESS_MIN         = 75;

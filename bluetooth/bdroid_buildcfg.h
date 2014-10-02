@@ -18,7 +18,7 @@
 #ifndef _BDROID_BUILDCFG_H
 #define _BDROID_BUILDCFG_H
 
-#define BTM_DEF_LOCAL_NAME   "Xperia T2 Ultra"
+#define BTM_DEF_LOCAL_NAME   "Xperia E3"
 #define BTA_DISABLE_DELAY 1000 /* in milliseconds */
 
 // Enables Interleave scan

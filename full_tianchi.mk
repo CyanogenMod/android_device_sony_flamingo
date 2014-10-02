@@ -13,8 +13,8 @@
 # limitations under the License.
 
 # Screen resoultion in Pixels.
-TARGET_SCREEN_HEIGHT := 1280
-TARGET_SCREEN_WIDTH := 720
+TARGET_SCREEN_HEIGHT := 854
+TARGET_SCREEN_WIDTH := 480
 
 # Torch
 PRODUCT_PACKAGES := \
@@ -27,11 +27,11 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 $(call inherit-product, device/sony/common/resources.mk)
 
 # Inherit from tianchi device
-$(call inherit-product, device/sony/tianchi/tianchi.mk)
+$(call inherit-product, device/sony/d22xx/d22xx.mk)
 
 # Set those variables here to overwrite the inherited values.
-PRODUCT_NAME := full_tianchi
-PRODUCT_DEVICE := tianchi
+PRODUCT_NAME := full_d22xx
+PRODUCT_DEVICE := d22xx
 PRODUCT_BRAND := Sony
 PRODUCT_MANUFACTURER := Sony
-PRODUCT_MODEL := Xperia T2 Ultra
+PRODUCT_MODEL := Xperia E3

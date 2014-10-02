@@ -1,1 +1,1 @@
-add_lunch_combo cm_tianchi-eng
+add_lunch_combo cm_d22xx-eng

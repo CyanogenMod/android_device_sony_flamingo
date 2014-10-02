@@ -19,9 +19,9 @@ include device/sony/common/BoardConfigCommon.mk
 include device/sony/qcom-common/BoardConfigCommon.mk
 
 # Assert
-TARGET_OTA_ASSERT_DEVICE := D5303,tianchi
+TARGET_OTA_ASSERT_DEVICE := D2203,d22xx
 
-TARGET_SPECIFIC_HEADER_PATH += device/sony/tianchi/include
+TARGET_SPECIFIC_HEADER_PATH += device/sony/d22xx/include
 
 # Kernel properties
 TARGET_KERNEL_SOURCE := kernel/sony/msm8226
@@ -42,14 +42,14 @@ TARGET_GLOBAL_CPPFLAGS += -mfpu=neon-vfpv4 -mfloat-abi=softfp
 COMMON_GLOBAL_CFLAGS += -D__ARM_USE_PLD -D__ARM_CACHE_LINE_SIZE=64
 
 # Hardware Features
-BOARD_HARDWARE_CLASS := device/sony/tianchi/cmhw
+BOARD_HARDWARE_CLASS := device/sony/d22xx/cmhw
 
 # Kernel information
 BOARD_KERNEL_BASE     := 0x00000000
 BOARD_KERNEL_PAGESIZE := 2048
 BOARD_KERNEL_CMDLINE  := console=ttyHSL0,115200,n8 androidboot.console=ttyHSL0 androidboot.hardware=qcom user_debug=31 msm_rtb.filter=0x37
 BOARD_MKBOOTIMG_ARGS  := --ramdisk_offset 0x02000000 --tags_offset 0x01E00000
-BOARD_CUSTOM_BOOTIMG_MK := device/sony/tianchi/custombootimg.mk
+BOARD_CUSTOM_BOOTIMG_MK := device/sony/d22xx/custombootimg.mk
 BOARD_KERNEL_SEPARATED_DT := true
 
 # Qualcomm
@@ -67,7 +67,7 @@ BOARD_USES_ALSA_AUDIO := true
 # Bluetooth
 BOARD_HAVE_BLUETOOTH := true
 BOARD_HAVE_BLUETOOTH_QCOM := true
-BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/sony/tianchi/bluetooth
+BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/sony/d22xx/bluetooth
 
 # Camera
 BOARD_CAMERA_HAVE_ISO := true
@@ -89,7 +89,7 @@ MAX_EGL_CACHE_KEY_SIZE := 12*1024
 MAX_EGL_CACHE_SIZE := 2048*1024
 
 # NFC
-BOARD_NFC_CHIPSET := pn547
+BOARD_NFC_CHIPSET := pn544
 BOARD_NFC_HAL_SUFFIX := $(TARGET_BOARD_PLATFORM)
 
 # Wifi
@@ -115,12 +115,12 @@ BOARD_VOLD_MAX_PARTITIONS := 26
 
 BOARD_BOOTIMAGE_PARTITION_SIZE := 20971520
 BOARD_RECOVERYIMAGE_PARTITION_SIZE := 20971520
-BOARD_SYSTEMIMAGE_PARTITION_SIZE := 2399141888
-BOARD_USERDATAIMAGE_PARTITION_SIZE := 5112839168
+BOARD_SYSTEMIMAGE_PARTITION_SIZE := 1782579200
+BOARD_USERDATAIMAGE_PARTITION_SIZE := 1879030784
 TARGET_USERIMAGES_USE_EXT4 := true
 
 # Recovery
-TARGET_RECOVERY_FSTAB := device/sony/tianchi/rootdir/fstab.qcom
+TARGET_RECOVERY_FSTAB := device/sony/d22xx/rootdir/fstab.qcom
 TARGET_RECOVERY_PIXEL_FORMAT := "RGBX_8888"
 BOARD_HAS_NO_SELECT_BUTTON := true
 BOARD_USE_CUSTOM_RECOVERY_FONT := \"roboto_15x24.h\"

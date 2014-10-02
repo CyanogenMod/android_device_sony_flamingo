@@ -12,8 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Inherit from tianchi device
-$(call inherit-product, device/sony/tianchi/full_tianchi.mk)
+# Inherit from d22xx device
+$(call inherit-product, device/sony/d22xx/full_d22xx.mk)
 
 # Enhanced NFC
 $(call inherit-product, vendor/cm/config/nfc_enhanced.mk)
@@ -22,7 +22,7 @@ $(call inherit-product, vendor/cm/config/nfc_enhanced.mk)
 $(call inherit-product, vendor/cm/config/common_full_phone.mk)
 
 # Build fingerprints
-PRODUCT_BUILD_PROP_OVERRIDES += PRODUCT_NAME=D5303 BUILD_FINGERPRINT=Sony/D5303/D5303:4.4.3/19.1.1.A.0.165/Wv93Zw:user/release-keys PRIVATE_BUILD_DESC="D5303-user 4.4.3 19.1.1.A.0.165 Wv93Zw release-keys"
+PRODUCT_BUILD_PROP_OVERRIDES += PRODUCT_NAME=D2203 BUILD_FINGERPRINT=Sony/D2203/D2203:4.4.2/18.4.C.1.29/4nv_bQ:user/release-keys PRIVATE_BUILD_DESC="D2203-user 4.4.2 18.4.C.1.29 4nv_bQ release-keys"
 
-PRODUCT_NAME := cm_tianchi
-PRODUCT_DEVICE := tianchi
+PRODUCT_NAME := cm_d22xx
+PRODUCT_DEVICE := d22xx

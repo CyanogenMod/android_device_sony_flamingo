@@ -17,7 +17,7 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
 # qcom common
 $(call inherit-product, device/sony/qcom-common/qcom-common.mk)
 
-COMMON_PATH := device/sony/tianchi
+COMMON_PATH := device/sony/d22xx
 
 DEVICE_PACKAGE_OVERLAYS += $(COMMON_PATH)/overlay
 
@@ -136,7 +136,7 @@ PRODUCT_COPY_FILES += \
 
 # Keystore
 PRODUCT_PACKAGES += \
-    keystore.msm8974
+    keystore.msm8226
 
 # NFC packages
 PRODUCT_PACKAGES += \
@@ -219,5 +219,5 @@ PRODUCT_PROPERTY_OVERRIDES += \
 $(call inherit-product-if-exists, frameworks/native/build/phone-xhdpi-1024-dalvik-heap.mk)
 
 # Include non-opensource parts
-$(call inherit-product, vendor/sony/tianchi/tianchi-vendor.mk)
+$(call inherit-product, vendor/sony/d22xx/d22xx-vendor.mk)
 
