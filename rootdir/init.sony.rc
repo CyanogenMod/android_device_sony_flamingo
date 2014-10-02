@@ -97,8 +97,8 @@ on boot
     setprop persist.radio.apm_sim_not_pwdn 1
 
     # Panel backlight
-    chown system system /sys/class/leds/lm3630-lcd-bl/brightness
-    chmod 660 /sys/class/leds/lm3630-lcd-bl/brightness
+    chown system system /sys/class/leds/wled:backlight/brightness
+    chmod 660 /sys/class/leds/wled:backlight/brightness
 
 # SONY: TrimArea Daemon
 # Last 2 args: start block(blk size 128k), number of blocks(partitionsize(kb)/128(kb))
@@ -113,10 +113,10 @@ service updatemiscta /system/bin/updatemiscta
     user root
     oneshot
 
-service illumination /system/bin/illumination_service
-    socket illumination stream 0660 root system
-    class core
-    user root
+service led-daemon /system/bin/led_daemon
+    class main
+    user system
+     group system
 
 # Trim Area QMI service
 service ta_qmi_service /system/bin/ta_qmi_service
@@ -133,19 +133,6 @@ service scd /system/bin/scd
     user system
     group system
 
-# Sensor calibration
-on property:service.acccalib.start=service_setting
-    exec /system/bin/acc_cal_data_manager service_setting
-
-on property:service.calib.start=service_setting
-    exec /system/bin/cal_data_manager service_setting
-
-on property:service.proxcalib.start=service_setting
-    exec /system/bin/prox_cal_data_manager service_setting
-
-on property:service.proxcalib.start=service_setting_default
-    exec /system/bin/prox_cal_data_manager service_setting_default
-
 # Start suntrold
 service suntrold /system/bin/suntrold
     user system
@@ -159,12 +146,6 @@ service credmgrd /system/bin/credmgrd
     group system
     socket credmgr stream 0660 system system
     class main
-
-# Start system_monitor
-service system_monitor /system/bin/system_monitor
-    socket sysmon stream 0660 root system
-    class core
-    user root
 
 # bugreport is triggered by holding down volume down, volume up and power
 service bugreport /system/bin/dumpstate -d -p -B \

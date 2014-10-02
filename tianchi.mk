@@ -166,6 +166,10 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     $(COMMON_PATH)/rootdir/system/etc/sensor_def_qcomdev.conf:system/etc/sensor_def_qcomdev.conf \
 
+# Thermal Engine
+PRODUCT_COPY_FILES += \
+    $(COMMON_PATH)/rootdir/system/etc/thermal-engine.conf:system/etc/thermal-engine.conf
+
 # USB
 PRODUCT_PACKAGES += \
     com.android.future.usb.accessory
