@@ -17,7 +17,7 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
 # qcom common
 $(call inherit-product, device/sony/qcom-common/qcom-common.mk)
 
-COMMON_PATH := device/sony/d22xx
+COMMON_PATH := device/sony/flamingo
 
 DEVICE_PACKAGE_OVERLAYS += $(COMMON_PATH)/overlay
 
@@ -217,5 +217,5 @@ PRODUCT_PROPERTY_OVERRIDES += \
 $(call inherit-product-if-exists, frameworks/native/build/phone-xhdpi-1024-dalvik-heap.mk)
 
 # Include non-opensource parts
-$(call inherit-product, vendor/sony/d22xx/d22xx-vendor.mk)
+$(call inherit-product, vendor/sony/flamingo/flamingo-vendor.mk)
 

@@ -26,12 +26,12 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 # Common Sony Resources
 $(call inherit-product, device/sony/common/resources.mk)
 
-# Inherit from tianchi device
-$(call inherit-product, device/sony/d22xx/d22xx.mk)
+# Inherit from flamingo device
+$(call inherit-product, device/sony/flamingo/flamingo.mk)
 
 # Set those variables here to overwrite the inherited values.
-PRODUCT_NAME := full_d22xx
-PRODUCT_DEVICE := d22xx
+PRODUCT_NAME := full_flamingo
+PRODUCT_DEVICE := flamingo
 PRODUCT_BRAND := Sony
 PRODUCT_MANUFACTURER := Sony
 PRODUCT_MODEL := Xperia E3
