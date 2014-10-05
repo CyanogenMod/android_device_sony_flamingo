@@ -103,13 +103,9 @@ on boot
     write /proc/sys/net/ipv6/conf/rmnet_usb2/accept_ra 2
     write /proc/sys/net/ipv6/conf/rmnet_usb3/accept_ra 2
 
-    # NFC
-    # local data and nfcee xml storage
+    # NFC local data and nfcee xml storage
     mkdir /data/nfc 0770 nfc nfc
     mkdir /data/nfc/param 0770 nfc nfc
-
-    # Symlink for compability
-    symlink /dev/pn547 /dev/pn544
 
 on post-fs-data
     mkdir /data/media 0770 media_rw media_rw
