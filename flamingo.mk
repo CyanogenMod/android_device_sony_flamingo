@@ -12,10 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-$(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
-
-# qcom common
-$(call inherit-product, device/sony/qcom-common/qcom-common.mk)
+# msm8226 common
+$(call inherit-product, device/sony/msm8226-common/msm8226-common.mk)
 
 COMMON_PATH := device/sony/flamingo
 
@@ -73,70 +71,20 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     $(COMMON_PATH)/recovery/bootrec-device:recovery/bootrec-device
 
-# Recovery
-PRODUCT_PACKAGES += \
-    extract_elf_ramdisk
-
 # Sbin
 PRODUCT_COPY_FILES += \
     $(COMMON_PATH)/rootdir/charger:root/charger \
     $(COMMON_PATH)/rootdir/sbin/wait4tad_static:root/sbin/wait4tad_static \
     $(COMMON_PATH)/rootdir/sbin/tad_static:root/sbin/tad_static
 
-# Audio
-PRODUCT_PACKAGES += \
-    audiod \
-    audio.a2dp.default \
-    audio.primary.msm8226 \
-    audio.r_submix.default \
-    audio.usb.default \
-    audio_policy.msm8226
-
-PRODUCT_PACKAGES += \
-    libaudio-resampler \
-    libqcompostprocbundle \
-    libqcomvisualizer \
-    libqcomvoiceprocessing \
-    tinymix
-
 PRODUCT_COPY_FILES += \
     $(COMMON_PATH)/rootdir/system/vendor/etc/audio_effects.conf:system/vendor/etc/audio_effects.conf \
     $(COMMON_PATH)/rootdir/system/etc/audio_policy.conf:system/etc/audio_policy.conf \
     $(COMMON_PATH)/rootdir/system/etc/mixer_paths.xml:system/etc/mixer_paths.xml \
 
-# Display
-PRODUCT_PACKAGES += \
-    hwcomposer.msm8226 \
-    gralloc.msm8226 \
-    copybit.msm8226 \
-    memtrack.msm8226
-
-# Filesystem management tools
-PRODUCT_PACKAGES += \
-    e2fsck
-
-# FM Radio
-PRODUCT_COPY_FILES += \
-    $(COMMON_PATH)/rootdir/system/etc/init.qcom.fm.sh:system/etc/init.qcom.fm.sh
-
-# GPS
-PRODUCT_COPY_FILES += \
-    $(COMMON_PATH)/gps/flp.conf:system/etc/flp.conf \
-    $(COMMON_PATH)/gps/gps.conf:system/etc/gps.conf \
-    $(COMMON_PATH)/gps/izat.conf:system/etc/izat.conf \
-    $(COMMON_PATH)/gps/sap.conf:system/etc/sap.conf
-
-PRODUCT_PACKAGES += \
-    com.qualcomm.location \
-    gps.msm8226
-
 PRODUCT_COPY_FILES += \
     $(COMMON_PATH)/rootdir/system/etc/msap.conf:system/etc/msap.conf \
     $(COMMON_PATH)/rootdir/system/etc/sec_config:system/etc/sec_config
-
-# Keystore
-PRODUCT_PACKAGES += \
-    keystore.msm8226
 
 # NFC packages
 PRODUCT_PACKAGES += \
@@ -171,48 +119,14 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     $(COMMON_PATH)/rootdir/system/etc/thermal-engine-8226.conf:system/etc/thermal-engine-8226.conf
 
-# USB
-PRODUCT_PACKAGES += \
-    com.android.future.usb.accessory
-
-# WiFi
-PRODUCT_PACKAGES += \
-    mac-update \
-    wcnss_service
-
 PRODUCT_COPY_FILES += \
-    $(COMMON_PATH)/rootdir/system/etc/wifi/wpa_supplicant_overlay.conf:system/etc/wifi/wpa_supplicant_overlay.conf \
-    $(COMMON_PATH)/rootdir/system/etc/wifi/p2p_supplicant_overlay.conf:system/etc/wifi/p2p_supplicant_overlay.conf
-
-PRODUCT_COPY_FILES += \
-    $(COMMON_PATH)/rootdir/system/etc/init.qcom.wifi.sh:system/etc/init.qcom.wifi.sh \
     $(COMMON_PATH)/rootdir/system/etc/firmware/wlan/prima/WCNSS_cfg.dat:system/etc/firmware/wlan/prima/WCNSS_cfg.dat \
     $(COMMON_PATH)/rootdir/system/etc/firmware/wlan/prima/WCNSS_qcom_cfg.ini:system/etc/firmware/wlan/prima/WCNSS_qcom_cfg.ini \
     $(COMMON_PATH)/rootdir/system/etc/firmware/wlan/prima/WCNSS_qcom_wlan_nv.bin:system/etc/firmware/wlan/prima/WCNSS_qcom_wlan_nv.bin
 
-# Set default USB interface
-PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
-    persist.sys.usb.config=mtp
-
-# Bluetooth
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.qualcomm.bt.hci_transport=smd
-
 # Display
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.sf.lcd_density=240
-
-# GPS
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.qc.sdk.izat.premium_enabled=1 \
-    ro.qc.sdk.izat.service_mask=0x0 \
-    persist.gps.qc_nlp_in_use=1 \
-    persist.loc.nlp_name=com.qualcomm.services.location \
-    ro.gps.agps_provider=1
-
-# SIM Props
-PRODUCT_PROPERTY_OVERRIDES += \
-    persist.radio.apm_sim_not_pwdn=1 \
 
 # call dalvik heap config
 $(call inherit-product-if-exists, frameworks/native/build/phone-xhdpi-1024-dalvik-heap.mk)
