@@ -95,6 +95,16 @@ on boot
     chown system system /sys/class/leds/wled:backlight/brightness
     chmod 660 /sys/class/leds/wled:backlight/brightness
 
+    chown system system /sys/class/leds/red/blink
+    chown system system /sys/class/leds/red/pause_hi
+    chown system system /sys/class/leds/red/pause_lo
+    chown system system /sys/class/leds/green/blink
+    chown system system /sys/class/leds/green/pause_hi
+    chown system system /sys/class/leds/green/pause_lo
+    chown system system /sys/class/leds/blue/blink
+    chown system system /sys/class/leds/blue/pause_hi
+    chown system system /sys/class/leds/blue/pause_lo
+
 # SONY: TrimArea Daemon
 # Last 2 args: start block(blk size 128k), number of blocks(partitionsize(kb)/128(kb))
 service tad_static /sbin/tad_static /dev/block/mmcblk0 1,16
