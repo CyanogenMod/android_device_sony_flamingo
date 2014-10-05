@@ -42,4 +42,4 @@ BOARD_USERDATAIMAGE_PARTITION_SIZE := 1879030784
 
 # Recovery
 TARGET_RECOVERY_FSTAB := device/sony/flamingo/rootdir/fstab.qcom
-BOARD_USE_CUSTOM_RECOVERY_FONT := \"roboto_15x24.h\"
+BOARD_USE_CUSTOM_RECOVERY_FONT := \"roboto_10x18.h\"
