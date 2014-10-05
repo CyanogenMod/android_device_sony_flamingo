@@ -165,10 +165,11 @@ PRODUCT_COPY_FILES += \
 # Sensors
 PRODUCT_COPY_FILES += \
     $(COMMON_PATH)/rootdir/system/etc/sensor_def_qcomdev.conf:system/etc/sensor_def_qcomdev.conf \
+    $(COMMON_PATH)/rootdir/system/etc/sensors_settings:system/etc/sensors_settings \
 
 # Thermal Engine
 PRODUCT_COPY_FILES += \
-    $(COMMON_PATH)/rootdir/system/etc/thermal-engine.conf:system/etc/thermal-engine.conf
+    $(COMMON_PATH)/rootdir/system/etc/thermal-engine-8226.conf:system/etc/thermal-engine-8226.conf
 
 # USB
 PRODUCT_PACKAGES += \
