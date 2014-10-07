@@ -8,7 +8,7 @@ INITSH := device/sony/flamingo/combinedroot/init.sh
 BOOTREC_DEVICE := $(PRODUCT_OUT)/recovery/bootrec-device
 
 KERNEL_CONFIG := $(KERNEL_OUT)/.config
-DTS_NAMES ?= msm8226 msm8926 apq8026
+DTS_NAMES ?= msm8226 msm8926
 DTS_FILES = $(wildcard $(TOP)/$(KERNEL_SRC)/arch/arm/boot/dts/$(DTS_NAME)*.dts)
 DTS_FILE = $(lastword $(subst /, ,$(1)))
 DTB_FILE = $(addprefix $(KERNEL_OUT)/arch/arm/boot/,$(patsubst %.dts,%.dtb,$(call DTS_FILE,$(1))))
