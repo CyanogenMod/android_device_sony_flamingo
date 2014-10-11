@@ -89,7 +89,7 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
     ro.semc.version.sw=1285-1179 \
     ro.semc.version.sw_revision=18.4.C.1.29 \
     ro.semc.version.sw_variant=GENERICSS-LTE \
-    ro.semc.version.sw_type=user
+    ro.semc.version.sw_type=$(TARGET_BUILD_TYPE)
 
 # call dalvik heap config
 $(call inherit-product-if-exists, frameworks/native/build/phone-xhdpi-1024-dalvik-heap.mk)
