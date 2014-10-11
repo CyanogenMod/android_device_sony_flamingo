@@ -23,12 +23,10 @@ TARGET_SPECIFIC_HEADER_PATH += device/sony/flamingo/include
 # Kernel properties
 TARGET_KERNEL_SOURCE := kernel/sony/msm8226
 TARGET_KERNEL_CONFIG := cm_arima_8926ss_sp_defconfig
+TARGET_DTB_EXTRA_FLAGS := --force-v2
 
 # Hardware Features
 BOARD_HARDWARE_CLASS := device/sony/flamingo/cmhw
-
-# Kernel information
-BOARD_CUSTOM_BOOTIMG_MK := device/sony/flamingo/custombootimg.mk
 
 # Bluetooth
 BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/sony/flamingo/bluetooth
