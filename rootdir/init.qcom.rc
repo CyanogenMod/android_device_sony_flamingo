@@ -107,6 +107,9 @@ on boot
     mkdir /data/nfc 0770 nfc nfc
     mkdir /data/nfc/param 0770 nfc nfc
 
+    # Symlink for compability
+    symlink /dev/pn547 /dev/pn544
+
 on post-fs-data
     mkdir /data/media 0770 media_rw media_rw
 

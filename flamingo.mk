@@ -87,8 +87,7 @@ PRODUCT_COPY_FILES += \
 # NFC Configs
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/rootdir/system/etc/libnfc-brcm.conf:system/etc/libnfc-brcm.conf \
-    $(LOCAL_PATH)/rootdir/system/etc/libnfc-nxp.conf:system/etc/libnfc-nxp.conf \
-    $(LOCAL_PATH)/rootdir/system/etc/nfc-nci.conf:system/etc/nfc-nci.conf
+    $(LOCAL_PATH)/rootdir/system/etc/libnfc-nxp.conf:system/etc/libnfc-nxp.conf
 
 # Media recording
 PRODUCT_COPY_FILES += \
