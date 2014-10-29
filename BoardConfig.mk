@@ -21,7 +21,7 @@ TARGET_OTA_ASSERT_DEVICE := D2203,flamingo
 TARGET_SPECIFIC_HEADER_PATH += device/sony/flamingo/include
 
 # Kernel properties
-TARGET_KERNEL_SOURCE := kernel/sony/msm8226
+TARGET_KERNEL_SOURCE := kernel/sony/flamingo
 TARGET_KERNEL_CONFIG := cm_arima_8926ss_sp_defconfig
 TARGET_DTB_EXTRA_FLAGS := --force-v2
 
