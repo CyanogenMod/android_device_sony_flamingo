@@ -1,0 +1,10 @@
+[
+  {
+    "repository": "android_kernel_sony_flamingo",
+    "target_path": "kernel/sony/flamingo"
+  },
+  {
+    "repository": "android_device_sony_msm8226-common",
+    "target_path": "device/sony/msm8226-common"
+  }
+]
