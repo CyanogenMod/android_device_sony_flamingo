@@ -145,7 +145,7 @@ etc/firmware/widevine.b03
 etc/firmware/widevine.mdt
 lib/egl/libGLES_android.so
 lib/hw/camera.msm8226.so:lib/hw/camera.vendor.msm8226.so
-lib/hw/lights.msm8226.so
+lib/hw/lights.msm8226.so:lib/hw/lights.vendor.msm8226.so
 lib/soundfx/libposteffectwrapper.so
 lib/soundfx/libpreeffectwrapper.so
 lib/soundfx/libqcompostprocbundle.so
