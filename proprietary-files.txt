@@ -179,7 +179,6 @@ lib/librilutils.so
 lib/libscdclient.so
 lib/libsys-utils.so
 lib/libta.so
-vendor/etc/audio_effects.conf
 vendor/firmware/keymaster/keymaster.b00
 vendor/firmware/keymaster/keymaster.b01
 vendor/firmware/keymaster/keymaster.b02
@@ -187,7 +186,6 @@ vendor/firmware/keymaster/keymaster.b03
 vendor/firmware/keymaster/keymaster.mdt
 vendor/firmware/libpn547_fw.so
 vendor/lib/drm/libdrmwvmplugin.so
-vendor/lib/hw/power.qcom.so
 vendor/lib/hw/sensors.msm8226.so
 vendor/lib/mediadrm/libwvdrmengine.so
 vendor/lib/libacdbloader.so
