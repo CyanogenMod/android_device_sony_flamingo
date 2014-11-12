@@ -47,10 +47,10 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/rootdir/system/vendor/etc/audio_effects.conf:system/vendor/etc/audio_effects.conf \
     $(LOCAL_PATH)/rootdir/system/etc/audio_policy.conf:system/etc/audio_policy.conf \
-    $(LOCAL_PATH)/rootdir/system/etc/mixer_paths.xml:system/etc/mixer_paths.xml \
+    $(LOCAL_PATH)/rootdir/system/etc/mixer_paths.xml:system/etc/mixer_paths.xml
 
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/rootdir/system/etc/msap.conf:system/etc/msap.conf \
+    $(LOCAL_PATH)/rootdir/system/etc/msap.conf:system/etc/msap.conf
 
 # NFC Configs
 PRODUCT_COPY_FILES += \
@@ -59,13 +59,12 @@ PRODUCT_COPY_FILES += \
 
 # Media recording
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/rootdir/system/etc/media_codecs.xml:system/etc/media_codecs.xml \
-    $(LOCAL_PATH)/rootdir/system/etc/media_profiles.xml:system/etc/media_profiles.xml \
+    $(LOCAL_PATH)/rootdir/system/etc/media_profiles.xml:system/etc/media_profiles.xml
 
 # Sensors
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/rootdir/system/etc/sensor_def_qcomdev.conf:system/etc/sensor_def_qcomdev.conf \
-    $(LOCAL_PATH)/rootdir/system/etc/sensors_settings:system/etc/sensors_settings \
+    $(LOCAL_PATH)/rootdir/system/etc/sensors_settings:system/etc/sensors_settings
 
 # Thermal Engine
 PRODUCT_COPY_FILES += \
