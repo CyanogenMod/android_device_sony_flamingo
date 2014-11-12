@@ -88,7 +88,7 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
     ro.semc.version.sw_type=$(TARGET_BUILD_TYPE)
 
 # call dalvik heap config
-$(call inherit-product-if-exists, frameworks/native/build/phone-xhdpi-1024-dalvik-heap.mk)
+$(call inherit-product, frameworks/native/build/phone-xhdpi-1024-dalvik-heap.mk)
 
 # Include non-opensource parts
 $(call inherit-product, vendor/sony/flamingo/flamingo-vendor.mk)
