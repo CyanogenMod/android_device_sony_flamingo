@@ -21,9 +21,7 @@ TARGET_KERNEL_CONFIG := aosp_yukon_flamingo_defconfig
 TARGET_OTA_ASSERT_DEVICE := D2203,flamingo
 
 # Recovery
-TARGET_RECOVERY_FSTAB := device/sony/flamingo/rootdir/recovery.fstab
-BOARD_USE_CUSTOM_RECOVERY_FONT := \"roboto_10x18.h\"
-BOARD_RECOVERY_SWIPE := true
+TARGET_RECOVERY_FSTAB := device/sony/flamingo/rootdir/fstab.yukon
 
 # Inherit from flamingo device
 $(call inherit-product, device/sony/flamingo/aosp_d2203.mk)
