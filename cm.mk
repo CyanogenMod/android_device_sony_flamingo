@@ -12,6 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# Resolution
+TARGET_SCREEN_HEIGHT := 854
+TARGET_SCREEN_WIDTH := 480
+
 # Kernel properties
 BUILD_KERNEL_WITH_ROM := true
 TARGET_KERNEL_SOURCE := kernel/sony
@@ -25,6 +29,9 @@ TARGET_RECOVERY_FSTAB := device/sony/flamingo/rootdir/fstab.yukon
 
 # Inherit from flamingo device
 $(call inherit-product, device/sony/flamingo/aosp_d2203.mk)
+
+# Inherit from common resources
+$(call inherit-product, device/sony/common/resources.mk)
 
 # Inherit CM common stuff.
 $(call inherit-product, vendor/cm/config/common_full_phone.mk)
