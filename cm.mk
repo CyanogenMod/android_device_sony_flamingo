@@ -24,9 +24,6 @@ TARGET_KERNEL_CONFIG := aosp_yukon_flamingo_defconfig
 # Assert
 TARGET_OTA_ASSERT_DEVICE := D2203,flamingo
 
-# Recovery
-TARGET_RECOVERY_FSTAB := device/sony/flamingo/rootdir/fstab.yukon
-
 # Inherit from flamingo device
 $(call inherit-product, device/sony/flamingo/aosp_d2203.mk)
 
