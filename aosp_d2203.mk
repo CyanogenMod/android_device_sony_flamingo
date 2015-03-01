@@ -20,6 +20,9 @@ $(call inherit-product, vendor/sony/flamingo/flamingo-vendor.mk)
 $(call inherit-product, vendor/sony/msm8226-common/msm8226-common-vendor.mk)
 $(call inherit-product, frameworks/native/build/phone-xhdpi-1024-dalvik-heap.mk)
 
+DEVICE_PACKAGE_OVERLAYS += \
+    device/sony/flamingo/overlay
+
 PRODUCT_COPY_FILES += \
     device/sony/flamingo/rootdir/system/usr/idc/elan-touchscreen.idc:system/usr/idc/elan-touchscreen.idc \
     device/sony/flamingo/rootdir/system/etc/mixer_paths.xml:system/etc/mixer_paths.xml \
