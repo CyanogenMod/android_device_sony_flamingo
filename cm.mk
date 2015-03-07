@@ -17,8 +17,6 @@ TARGET_SCREEN_HEIGHT := 854
 TARGET_SCREEN_WIDTH := 480
 
 # Kernel properties
-BUILD_KERNEL_WITH_ROM := true
-TARGET_KERNEL_SOURCE := kernel/sony
 TARGET_KERNEL_CONFIG := aosp_yukon_flamingo_defconfig
 
 # Assert
